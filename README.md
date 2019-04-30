@@ -4,6 +4,8 @@
 - clone the repo to your local machine
 - `cd` into the directory
 - install laravel dependency packages using `composer install`
+- run php artisan migrate
+- run php artisan db:seed
 - create `.env` file and generate APP_KEY using `cp .env.example .env && php artisan key:generate`
 - install client-side javascript packages dependency by `npm install`
 - run Mix tasks by `npm run dev`
