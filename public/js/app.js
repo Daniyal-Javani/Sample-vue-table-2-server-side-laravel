@@ -86,6 +86,76 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/arr-diff/index.js":
+/*!****************************************!*\
+  !*** ./node_modules/arr-diff/index.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * arr-diff <https://github.com/jonschlinkert/arr-diff>
+ *
+ * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Licensed under the MIT License
+ */
+
+
+
+var flatten = __webpack_require__(/*! arr-flatten */ "./node_modules/arr-flatten/index.js");
+var slice = [].slice;
+
+/**
+ * Return the difference between the first array and
+ * additional arrays.
+ *
+ * ```js
+ * var diff = require('{%= name %}');
+ *
+ * var a = ['a', 'b', 'c', 'd'];
+ * var b = ['b', 'c'];
+ *
+ * console.log(diff(a, b))
+ * //=> ['a', 'd']
+ * ```
+ *
+ * @param  {Array} `a`
+ * @param  {Array} `b`
+ * @return {Array}
+ * @api public
+ */
+
+function diff(arr, arrays) {
+  var argsLen = arguments.length;
+  var len = arr.length, i = -1;
+  var res = [], arrays;
+
+  if (argsLen === 1) {
+    return arr;
+  }
+
+  if (argsLen > 2) {
+    arrays = flatten(slice.call(arguments, 1));
+  }
+
+  while (++i < len) {
+    if (!~arrays.indexOf(arr[i])) {
+      res.push(arr[i]);
+    }
+  }
+  return res;
+}
+
+/**
+ * Expose `diff`
+ */
+
+module.exports = diff;
+
+
+/***/ }),
+
 /***/ "./node_modules/arr-filter/index.js":
 /*!******************************************!*\
   !*** ./node_modules/arr-filter/index.js ***!
@@ -475,7 +545,7 @@ module.exports = function every(arr, cb, thisArg) {
 
 var filter = __webpack_require__(/*! filter-array */ "./node_modules/filter-array/index.js");
 var every = __webpack_require__(/*! array-every */ "./node_modules/array-every/index.js");
-var unique = __webpack_require__(/*! array-unique */ "./node_modules/array-intersection/node_modules/array-unique/index.js");
+var unique = __webpack_require__(/*! array-unique */ "./node_modules/array-unique/index.js");
 var slice = __webpack_require__(/*! array-slice */ "./node_modules/array-slice/index.js");
 var indexOf = __webpack_require__(/*! index-of */ "./node_modules/index-of/index.js");
 
@@ -495,46 +565,6 @@ module.exports = function intersection(arr) {
       return indexOf(cur, ele) !== -1;
     });
   });
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/array-intersection/node_modules/array-unique/index.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/array-intersection/node_modules/array-unique/index.js ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * array-unique <https://github.com/jonschlinkert/array-unique>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-module.exports = function unique(arr) {
-  if (!Array.isArray(arr)) {
-    throw new TypeError('array-unique expects an array.');
-  }
-
-  var len = arr.length;
-  var i = -1;
-
-  while (i++ < len) {
-    var j = i + 1;
-
-    for (; j < arr.length; ++j) {
-      if (arr[i] === arr[j]) {
-        arr.splice(j--, 1);
-      }
-    }
-  }
-  return arr;
 };
 
 
@@ -584,6 +614,46 @@ function idx(arr, pos, end) {
 
   return pos;
 }
+
+/***/ }),
+
+/***/ "./node_modules/array-unique/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/array-unique/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * array-unique <https://github.com/jonschlinkert/array-unique>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+
+
+module.exports = function unique(arr) {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('array-unique expects an array.');
+  }
+
+  var len = arr.length;
+  var i = -1;
+
+  while (i++ < len) {
+    var j = i + 1;
+
+    for (; j < arr.length; ++j) {
+      if (arr[i] === arr[j]) {
+        arr.splice(j--, 1);
+      }
+    }
+  }
+  return arr;
+};
+
 
 /***/ }),
 
@@ -2255,10 +2325,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TableComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TableComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2272,38 +2342,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  },
   data: function data() {
     return {
-      columns: ['id', 'name', 'age'],
-      tableData: [{
-        id: 1,
-        name: "John",
-        age: "20"
-      }, {
-        id: 2,
-        name: "Jane",
-        age: "24"
-      }, {
-        id: 3,
-        name: "Susan",
-        age: "16"
-      }, {
-        id: 4,
-        name: "Chris",
-        age: "55"
-      }, {
-        id: 5,
-        name: "Dan",
-        age: "40"
-      }],
-      options: {// see the options API
-      },
-      namest: 'asdf'
+      columns: ['name', 'email'],
+      tableData: [],
+      options: {
+        filterable: ['name', 'email'],
+        sortable: ['name', 'email'],
+        perPage: 25,
+        perPageValues: [25],
+        pagination: {
+          chunk: 3,
+          edge: true,
+          //set dropdown to true to get dropdown instead of pagenation
+          dropdown: false
+        },
+        requestAdapter: function requestAdapter(data) {
+          return {
+            sort: data.orderBy ? data.orderBy : 'name',
+            direction: data.ascending ? 'asc' : 'desc',
+            query: data.query,
+            byColumn: data.byColumn,
+            limit: data.limit,
+            page: data.page,
+            orderBy: data.orderBy,
+            ascending: data.ascending
+          };
+        },
+        responseAdapter: function responseAdapter(_ref) {
+          var data = _ref.data;
+          return {
+            data: data.data,
+            count: data.count
+          };
+        },
+        templates: {}
+      }
     };
   }
 });
@@ -6918,6 +6993,417 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
+/***/ "./node_modules/braces/index.js":
+/*!**************************************!*\
+  !*** ./node_modules/braces/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * braces <https://github.com/jonschlinkert/braces>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT license.
+ */
+
+
+
+/**
+ * Module dependencies
+ */
+
+var expand = __webpack_require__(/*! expand-range */ "./node_modules/expand-range/index.js");
+var repeat = __webpack_require__(/*! repeat-element */ "./node_modules/repeat-element/index.js");
+var tokens = __webpack_require__(/*! preserve */ "./node_modules/preserve/index.js");
+
+/**
+ * Expose `braces`
+ */
+
+module.exports = function(str, options) {
+  if (typeof str !== 'string') {
+    throw new Error('braces expects a string');
+  }
+  return braces(str, options);
+};
+
+/**
+ * Expand `{foo,bar}` or `{1..5}` braces in the
+ * given `string`.
+ *
+ * @param  {String} `str`
+ * @param  {Array} `arr`
+ * @param  {Object} `options`
+ * @return {Array}
+ */
+
+function braces(str, arr, options) {
+  if (str === '') {
+    return [];
+  }
+
+  if (!Array.isArray(arr)) {
+    options = arr;
+    arr = [];
+  }
+
+  var opts = options || {};
+  arr = arr || [];
+
+  if (typeof opts.nodupes === 'undefined') {
+    opts.nodupes = true;
+  }
+
+  var fn = opts.fn;
+  var es6;
+
+  if (typeof opts === 'function') {
+    fn = opts;
+    opts = {};
+  }
+
+  if (!(patternRe instanceof RegExp)) {
+    patternRe = patternRegex();
+  }
+
+  var matches = str.match(patternRe) || [];
+  var m = matches[0];
+
+  switch(m) {
+    case '\\,':
+      return escapeCommas(str, arr, opts);
+    case '\\.':
+      return escapeDots(str, arr, opts);
+    case '\/.':
+      return escapePaths(str, arr, opts);
+    case ' ':
+      return splitWhitespace(str);
+    case '{,}':
+      return exponential(str, opts, braces);
+    case '{}':
+      return emptyBraces(str, arr, opts);
+    case '\\{':
+    case '\\}':
+      return escapeBraces(str, arr, opts);
+    case '${':
+      if (!/\{[^{]+\{/.test(str)) {
+        return arr.concat(str);
+      } else {
+        es6 = true;
+        str = tokens.before(str, es6Regex());
+      }
+  }
+
+  if (!(braceRe instanceof RegExp)) {
+    braceRe = braceRegex();
+  }
+
+  var match = braceRe.exec(str);
+  if (match == null) {
+    return [str];
+  }
+
+  var outter = match[1];
+  var inner = match[2];
+  if (inner === '') { return [str]; }
+
+  var segs, segsLength;
+
+  if (inner.indexOf('..') !== -1) {
+    segs = expand(inner, opts, fn) || inner.split(',');
+    segsLength = segs.length;
+
+  } else if (inner[0] === '"' || inner[0] === '\'') {
+    return arr.concat(str.split(/['"]/).join(''));
+
+  } else {
+    segs = inner.split(',');
+    if (opts.makeRe) {
+      return braces(str.replace(outter, wrap(segs, '|')), opts);
+    }
+
+    segsLength = segs.length;
+    if (segsLength === 1 && opts.bash) {
+      segs[0] = wrap(segs[0], '\\');
+    }
+  }
+
+  var len = segs.length;
+  var i = 0, val;
+
+  while (len--) {
+    var path = segs[i++];
+
+    if (/(\.[^.\/])/.test(path)) {
+      if (segsLength > 1) {
+        return segs;
+      } else {
+        return [str];
+      }
+    }
+
+    val = splice(str, outter, path);
+
+    if (/\{[^{}]+?\}/.test(val)) {
+      arr = braces(val, arr, opts);
+    } else if (val !== '') {
+      if (opts.nodupes && arr.indexOf(val) !== -1) { continue; }
+      arr.push(es6 ? tokens.after(val) : val);
+    }
+  }
+
+  if (opts.strict) { return filter(arr, filterEmpty); }
+  return arr;
+}
+
+/**
+ * Expand exponential ranges
+ *
+ *   `a{,}{,}` => ['a', 'a', 'a', 'a']
+ */
+
+function exponential(str, options, fn) {
+  if (typeof options === 'function') {
+    fn = options;
+    options = null;
+  }
+
+  var opts = options || {};
+  var esc = '__ESC_EXP__';
+  var exp = 0;
+  var res;
+
+  var parts = str.split('{,}');
+  if (opts.nodupes) {
+    return fn(parts.join(''), opts);
+  }
+
+  exp = parts.length - 1;
+  res = fn(parts.join(esc), opts);
+  var len = res.length;
+  var arr = [];
+  var i = 0;
+
+  while (len--) {
+    var ele = res[i++];
+    var idx = ele.indexOf(esc);
+
+    if (idx === -1) {
+      arr.push(ele);
+
+    } else {
+      ele = ele.split('__ESC_EXP__').join('');
+      if (!!ele && opts.nodupes !== false) {
+        arr.push(ele);
+
+      } else {
+        var num = Math.pow(2, exp);
+        arr.push.apply(arr, repeat(ele, num));
+      }
+    }
+  }
+  return arr;
+}
+
+/**
+ * Wrap a value with parens, brackets or braces,
+ * based on the given character/separator.
+ *
+ * @param  {String|Array} `val`
+ * @param  {String} `ch`
+ * @return {String}
+ */
+
+function wrap(val, ch) {
+  if (ch === '|') {
+    return '(' + val.join(ch) + ')';
+  }
+  if (ch === ',') {
+    return '{' + val.join(ch) + '}';
+  }
+  if (ch === '-') {
+    return '[' + val.join(ch) + ']';
+  }
+  if (ch === '\\') {
+    return '\\{' + val + '\\}';
+  }
+}
+
+/**
+ * Handle empty braces: `{}`
+ */
+
+function emptyBraces(str, arr, opts) {
+  return braces(str.split('{}').join('\\{\\}'), arr, opts);
+}
+
+/**
+ * Filter out empty-ish values
+ */
+
+function filterEmpty(ele) {
+  return !!ele && ele !== '\\';
+}
+
+/**
+ * Handle patterns with whitespace
+ */
+
+function splitWhitespace(str) {
+  var segs = str.split(' ');
+  var len = segs.length;
+  var res = [];
+  var i = 0;
+
+  while (len--) {
+    res.push.apply(res, braces(segs[i++]));
+  }
+  return res;
+}
+
+/**
+ * Handle escaped braces: `\\{foo,bar}`
+ */
+
+function escapeBraces(str, arr, opts) {
+  if (!/\{[^{]+\{/.test(str)) {
+    return arr.concat(str.split('\\').join(''));
+  } else {
+    str = str.split('\\{').join('__LT_BRACE__');
+    str = str.split('\\}').join('__RT_BRACE__');
+    return map(braces(str, arr, opts), function(ele) {
+      ele = ele.split('__LT_BRACE__').join('{');
+      return ele.split('__RT_BRACE__').join('}');
+    });
+  }
+}
+
+/**
+ * Handle escaped dots: `{1\\.2}`
+ */
+
+function escapeDots(str, arr, opts) {
+  if (!/[^\\]\..+\\\./.test(str)) {
+    return arr.concat(str.split('\\').join(''));
+  } else {
+    str = str.split('\\.').join('__ESC_DOT__');
+    return map(braces(str, arr, opts), function(ele) {
+      return ele.split('__ESC_DOT__').join('.');
+    });
+  }
+}
+
+/**
+ * Handle escaped dots: `{1\\.2}`
+ */
+
+function escapePaths(str, arr, opts) {
+  str = str.split('\/.').join('__ESC_PATH__');
+  return map(braces(str, arr, opts), function(ele) {
+    return ele.split('__ESC_PATH__').join('\/.');
+  });
+}
+
+/**
+ * Handle escaped commas: `{a\\,b}`
+ */
+
+function escapeCommas(str, arr, opts) {
+  if (!/\w,/.test(str)) {
+    return arr.concat(str.split('\\').join(''));
+  } else {
+    str = str.split('\\,').join('__ESC_COMMA__');
+    return map(braces(str, arr, opts), function(ele) {
+      return ele.split('__ESC_COMMA__').join(',');
+    });
+  }
+}
+
+/**
+ * Regex for common patterns
+ */
+
+function patternRegex() {
+  return /\${|( (?=[{,}])|(?=[{,}]) )|{}|{,}|\\,(?=.*[{}])|\/\.(?=.*[{}])|\\\.(?={)|\\{|\\}/;
+}
+
+/**
+ * Braces regex.
+ */
+
+function braceRegex() {
+  return /.*(\\?\{([^}]+)\})/;
+}
+
+/**
+ * es6 delimiter regex.
+ */
+
+function es6Regex() {
+  return /\$\{([^}]+)\}/;
+}
+
+var braceRe;
+var patternRe;
+
+/**
+ * Faster alternative to `String.replace()` when the
+ * index of the token to be replaces can't be supplied
+ */
+
+function splice(str, token, replacement) {
+  var i = str.indexOf(token);
+  return str.substr(0, i) + replacement
+    + str.substr(i + token.length);
+}
+
+/**
+ * Fast array map
+ */
+
+function map(arr, fn) {
+  if (arr == null) {
+    return [];
+  }
+
+  var len = arr.length;
+  var res = new Array(len);
+  var i = -1;
+
+  while (++i < len) {
+    res[i] = fn(arr[i], i, arr);
+  }
+
+  return res;
+}
+
+/**
+ * Fast array filter
+ */
+
+function filter(arr, cb) {
+  if (arr == null) return [];
+  if (typeof cb !== 'function') {
+    throw new TypeError('braces: filter expects a callback function.');
+  }
+
+  var len = arr.length;
+  var res = arr.slice();
+  var i = 0;
+
+  while (len--) {
+    if (!cb(arr[len], i++)) {
+      res.splice(len, 1);
+    }
+  }
+  return res;
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/buffer/index.js":
 /*!**************************************!*\
   !*** ./node_modules/buffer/index.js ***!
@@ -9070,6 +9556,181 @@ module.exports = debounce;
 
 /***/ }),
 
+/***/ "./node_modules/expand-brackets/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/expand-brackets/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * expand-brackets <https://github.com/jonschlinkert/expand-brackets>
+ *
+ * Copyright (c) 2015 Jon Schlinkert.
+ * Licensed under the MIT license.
+ */
+
+
+
+var isPosixBracket = __webpack_require__(/*! is-posix-bracket */ "./node_modules/is-posix-bracket/index.js");
+
+/**
+ * POSIX character classes
+ */
+
+var POSIX = {
+  alnum: 'a-zA-Z0-9',
+  alpha: 'a-zA-Z',
+  blank: ' \\t',
+  cntrl: '\\x00-\\x1F\\x7F',
+  digit: '0-9',
+  graph: '\\x21-\\x7E',
+  lower: 'a-z',
+  print: '\\x20-\\x7E',
+  punct: '-!"#$%&\'()\\*+,./:;<=>?@[\\]^_`{|}~',
+  space: ' \\t\\r\\n\\v\\f',
+  upper: 'A-Z',
+  word:  'A-Za-z0-9_',
+  xdigit: 'A-Fa-f0-9',
+};
+
+/**
+ * Expose `brackets`
+ */
+
+module.exports = brackets;
+
+function brackets(str) {
+  if (!isPosixBracket(str)) {
+    return str;
+  }
+
+  var negated = false;
+  if (str.indexOf('[^') !== -1) {
+    negated = true;
+    str = str.split('[^').join('[');
+  }
+  if (str.indexOf('[!') !== -1) {
+    negated = true;
+    str = str.split('[!').join('[');
+  }
+
+  var a = str.split('[');
+  var b = str.split(']');
+  var imbalanced = a.length !== b.length;
+
+  var parts = str.split(/(?::\]\[:|\[?\[:|:\]\]?)/);
+  var len = parts.length, i = 0;
+  var end = '', beg = '';
+  var res = [];
+
+  // start at the end (innermost) first
+  while (len--) {
+    var inner = parts[i++];
+    if (inner === '^[!' || inner === '[!') {
+      inner = '';
+      negated = true;
+    }
+
+    var prefix = negated ? '^' : '';
+    var ch = POSIX[inner];
+
+    if (ch) {
+      res.push('[' + prefix + ch + ']');
+    } else if (inner) {
+      if (/^\[?\w-\w\]?$/.test(inner)) {
+        if (i === parts.length) {
+          res.push('[' + prefix + inner);
+        } else if (i === 1) {
+          res.push(prefix + inner + ']');
+        } else {
+          res.push(prefix + inner);
+        }
+      } else {
+        if (i === 1) {
+          beg += inner;
+        } else if (i === parts.length) {
+          end += inner;
+        } else {
+          res.push('[' + prefix + inner + ']');
+        }
+      }
+    }
+  }
+
+  var result = res.join('|');
+  var rlen = res.length || 1;
+  if (rlen > 1) {
+    result = '(?:' + result + ')';
+    rlen = 1;
+  }
+  if (beg) {
+    rlen++;
+    if (beg.charAt(0) === '[') {
+      if (imbalanced) {
+        beg = '\\[' + beg.slice(1);
+      } else {
+        beg += ']';
+      }
+    }
+    result = beg + result;
+  }
+  if (end) {
+    rlen++;
+    if (end.slice(-1) === ']') {
+      if (imbalanced) {
+        end = end.slice(0, end.length - 1) + '\\]';
+      } else {
+        end = '[' + end;
+      }
+    }
+    result += end;
+  }
+
+  if (rlen > 1) {
+    result = result.split('][').join(']|[');
+    if (result.indexOf('|') !== -1 && !/\(\?/.test(result)) {
+      result = '(?:' + result + ')';
+    }
+  }
+
+  result = result.replace(/\[+=|=\]+/g, '\\b');
+  return result;
+}
+
+brackets.makeRe = function(pattern) {
+  try {
+    return new RegExp(brackets(pattern));
+  } catch (err) {}
+};
+
+brackets.isMatch = function(str, pattern) {
+  try {
+    return brackets.makeRe(pattern).test(str);
+  } catch (err) {
+    return false;
+  }
+};
+
+brackets.match = function(arr, pattern) {
+  var len = arr.length, i = 0;
+  var res = arr.slice();
+
+  var re = brackets.makeRe(pattern);
+  while (i < len) {
+    var ele = arr[i++];
+    if (!re.test(ele)) {
+      continue;
+    }
+    res.splice(i, 1);
+  }
+  return res;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/expand-range/index.js":
 /*!********************************************!*\
   !*** ./node_modules/expand-range/index.js ***!
@@ -9087,7 +9748,7 @@ module.exports = debounce;
 
 
 
-var fill = __webpack_require__(/*! fill-range */ "./node_modules/expand-range/node_modules/fill-range/index.js");
+var fill = __webpack_require__(/*! fill-range */ "./node_modules/fill-range/index.js");
 
 module.exports = function expandRange(str, options, fn) {
   if (typeof str !== 'string') {
@@ -9125,10 +9786,221 @@ module.exports = function expandRange(str, options, fn) {
 
 /***/ }),
 
-/***/ "./node_modules/expand-range/node_modules/fill-range/index.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/expand-range/node_modules/fill-range/index.js ***!
-  \********************************************************************/
+/***/ "./node_modules/extglob/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/extglob/index.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * extglob <https://github.com/jonschlinkert/extglob>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+
+
+/**
+ * Module dependencies
+ */
+
+var isExtglob = __webpack_require__(/*! is-extglob */ "./node_modules/is-extglob/index.js");
+var re, cache = {};
+
+/**
+ * Expose `extglob`
+ */
+
+module.exports = extglob;
+
+/**
+ * Convert the given extglob `string` to a regex-compatible
+ * string.
+ *
+ * ```js
+ * var extglob = require('extglob');
+ * extglob('!(a?(b))');
+ * //=> '(?!a(?:b)?)[^/]*?'
+ * ```
+ *
+ * @param {String} `str` The string to convert.
+ * @param {Object} `options`
+ *   @option {Boolean} [options] `esc` If `false` special characters will not be escaped. Defaults to `true`.
+ *   @option {Boolean} [options] `regex` If `true` a regular expression is returned instead of a string.
+ * @return {String}
+ * @api public
+ */
+
+
+function extglob(str, opts) {
+  opts = opts || {};
+  var o = {}, i = 0;
+
+  // fix common character reversals
+  // '*!(.js)' => '*.!(js)'
+  str = str.replace(/!\(([^\w*()])/g, '$1!(');
+
+  // support file extension negation
+  str = str.replace(/([*\/])\.!\([*]\)/g, function (m, ch) {
+    if (ch === '/') {
+      return escape('\\/[^.]+');
+    }
+    return escape('[^.]+');
+  });
+
+  // create a unique key for caching by
+  // combining the string and options
+  var key = str
+    + String(!!opts.regex)
+    + String(!!opts.contains)
+    + String(!!opts.escape);
+
+  if (cache.hasOwnProperty(key)) {
+    return cache[key];
+  }
+
+  if (!(re instanceof RegExp)) {
+    re = regex();
+  }
+
+  opts.negate = false;
+  var m;
+
+  while (m = re.exec(str)) {
+    var prefix = m[1];
+    var inner = m[3];
+    if (prefix === '!') {
+      opts.negate = true;
+    }
+
+    var id = '__EXTGLOB_' + (i++) + '__';
+    // use the prefix of the _last_ (outtermost) pattern
+    o[id] = wrap(inner, prefix, opts.escape);
+    str = str.split(m[0]).join(id);
+  }
+
+  var keys = Object.keys(o);
+  var len = keys.length;
+
+  // we have to loop again to allow us to convert
+  // patterns in reverse order (starting with the
+  // innermost/last pattern first)
+  while (len--) {
+    var prop = keys[len];
+    str = str.split(prop).join(o[prop]);
+  }
+
+  var result = opts.regex
+    ? toRegex(str, opts.contains, opts.negate)
+    : str;
+
+  result = result.split('.').join('\\.');
+
+  // cache the result and return it
+  return (cache[key] = result);
+}
+
+/**
+ * Convert `string` to a regex string.
+ *
+ * @param  {String} `str`
+ * @param  {String} `prefix` Character that determines how to wrap the string.
+ * @param  {Boolean} `esc` If `false` special characters will not be escaped. Defaults to `true`.
+ * @return {String}
+ */
+
+function wrap(inner, prefix, esc) {
+  if (esc) inner = escape(inner);
+
+  switch (prefix) {
+    case '!':
+      return '(?!' + inner + ')[^/]' + (esc ? '%%%~' : '*?');
+    case '@':
+      return '(?:' + inner + ')';
+    case '+':
+      return '(?:' + inner + ')+';
+    case '*':
+      return '(?:' + inner + ')' + (esc ? '%%' : '*')
+    case '?':
+      return '(?:' + inner + '|)';
+    default:
+      return inner;
+  }
+}
+
+function escape(str) {
+  str = str.split('*').join('[^/]%%%~');
+  str = str.split('.').join('\\.');
+  return str;
+}
+
+/**
+ * extglob regex.
+ */
+
+function regex() {
+  return /(\\?[@?!+*$]\\?)(\(([^()]*?)\))/;
+}
+
+/**
+ * Negation regex
+ */
+
+function negate(str) {
+  return '(?!^' + str + ').*$';
+}
+
+/**
+ * Create the regex to do the matching. If
+ * the leading character in the `pattern` is `!`
+ * a negation regex is returned.
+ *
+ * @param {String} `pattern`
+ * @param {Boolean} `contains` Allow loose matching.
+ * @param {Boolean} `isNegated` True if the pattern is a negation pattern.
+ */
+
+function toRegex(pattern, contains, isNegated) {
+  var prefix = contains ? '^' : '';
+  var after = contains ? '$' : '';
+  pattern = ('(?:' + pattern + ')' + after);
+  if (isNegated) {
+    pattern = prefix + negate(pattern);
+  }
+  return new RegExp(prefix + pattern);
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/filename-regex/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/filename-regex/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * filename-regex <https://github.com/regexps/filename-regex>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert
+ * Licensed under the MIT license.
+ */
+
+module.exports = function filenameRegex() {
+  return /([^\\\/]+)$/;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/fill-range/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/fill-range/index.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9142,8 +10014,8 @@ module.exports = function expandRange(str, options, fn) {
 
 
 
-var isObject = __webpack_require__(/*! isobject */ "./node_modules/expand-range/node_modules/isobject/index.js");
-var isNumber = __webpack_require__(/*! is-number */ "./node_modules/expand-range/node_modules/is-number/index.js");
+var isObject = __webpack_require__(/*! isobject */ "./node_modules/isobject/index.js");
+var isNumber = __webpack_require__(/*! is-number */ "./node_modules/is-number/index.js");
 var randomize = __webpack_require__(/*! randomatic */ "./node_modules/randomatic/index.js");
 var repeatStr = __webpack_require__(/*! repeat-string */ "./node_modules/repeat-string/index.js");
 var repeat = __webpack_require__(/*! repeat-element */ "./node_modules/repeat-element/index.js");
@@ -9545,84 +10417,6 @@ function length(val) {
 
 /***/ }),
 
-/***/ "./node_modules/expand-range/node_modules/is-number/index.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/expand-range/node_modules/is-number/index.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * is-number <https://github.com/jonschlinkert/is-number>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-var typeOf = __webpack_require__(/*! kind-of */ "./node_modules/kind-of/index.js");
-
-module.exports = function isNumber(num) {
-  var type = typeOf(num);
-  if (type !== 'number' && type !== 'string') {
-    return false;
-  }
-  var n = +num;
-  return (n - n + 1) >= 0 && num !== '';
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/expand-range/node_modules/isobject/index.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/expand-range/node_modules/isobject/index.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * isobject <https://github.com/jonschlinkert/isobject>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-var isArray = __webpack_require__(/*! isarray */ "./node_modules/isarray/index.js");
-
-module.exports = function isObject(val) {
-  return val != null && typeof val === 'object' && isArray(val) === false;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/filename-regex/index.js":
-/*!**********************************************!*\
-  !*** ./node_modules/filename-regex/index.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * filename-regex <https://github.com/regexps/filename-regex>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert
- * Licensed under the MIT license.
- */
-
-module.exports = function filenameRegex() {
-  return /([^\\\/]+)$/;
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/filter-array/index.js":
 /*!********************************************!*\
   !*** ./node_modules/filter-array/index.js ***!
@@ -9640,9 +10434,9 @@ module.exports = function filenameRegex() {
 
 
 
-var typeOf = __webpack_require__(/*! kind-of */ "./node_modules/filter-array/node_modules/kind-of/index.js");
+var typeOf = __webpack_require__(/*! kind-of */ "./node_modules/kind-of/index.js");
 var filter = __webpack_require__(/*! arr-filter */ "./node_modules/arr-filter/index.js");
-var mm = __webpack_require__(/*! micromatch */ "./node_modules/filter-array/node_modules/micromatch/index.js");
+var mm = __webpack_require__(/*! micromatch */ "./node_modules/micromatch/index.js");
 
 /**
  * Filter array against given glob
@@ -9684,2333 +10478,6 @@ module.exports = function filterArray(arr, filters, opts) {
   }
 
   return [];
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/arr-diff/index.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/arr-diff/index.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * arr-diff <https://github.com/jonschlinkert/arr-diff>
- *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
- * Licensed under the MIT License
- */
-
-
-
-var flatten = __webpack_require__(/*! arr-flatten */ "./node_modules/arr-flatten/index.js");
-var slice = [].slice;
-
-/**
- * Return the difference between the first array and
- * additional arrays.
- *
- * ```js
- * var diff = require('{%= name %}');
- *
- * var a = ['a', 'b', 'c', 'd'];
- * var b = ['b', 'c'];
- *
- * console.log(diff(a, b))
- * //=> ['a', 'd']
- * ```
- *
- * @param  {Array} `a`
- * @param  {Array} `b`
- * @return {Array}
- * @api public
- */
-
-function diff(arr, arrays) {
-  var argsLen = arguments.length;
-  var len = arr.length, i = -1;
-  var res = [], arrays;
-
-  if (argsLen === 1) {
-    return arr;
-  }
-
-  if (argsLen > 2) {
-    arrays = flatten(slice.call(arguments, 1));
-  }
-
-  while (++i < len) {
-    if (!~arrays.indexOf(arr[i])) {
-      res.push(arr[i]);
-    }
-  }
-  return res;
-}
-
-/**
- * Expose `diff`
- */
-
-module.exports = diff;
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/array-unique/index.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/array-unique/index.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * array-unique <https://github.com/jonschlinkert/array-unique>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-module.exports = function unique(arr) {
-  if (!Array.isArray(arr)) {
-    throw new TypeError('array-unique expects an array.');
-  }
-
-  var len = arr.length;
-  var i = -1;
-
-  while (i++ < len) {
-    var j = i + 1;
-
-    for (; j < arr.length; ++j) {
-      if (arr[i] === arr[j]) {
-        arr.splice(j--, 1);
-      }
-    }
-  }
-  return arr;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/braces/index.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/braces/index.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * braces <https://github.com/jonschlinkert/braces>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT license.
- */
-
-
-
-/**
- * Module dependencies
- */
-
-var expand = __webpack_require__(/*! expand-range */ "./node_modules/expand-range/index.js");
-var repeat = __webpack_require__(/*! repeat-element */ "./node_modules/repeat-element/index.js");
-var tokens = __webpack_require__(/*! preserve */ "./node_modules/preserve/index.js");
-
-/**
- * Expose `braces`
- */
-
-module.exports = function(str, options) {
-  if (typeof str !== 'string') {
-    throw new Error('braces expects a string');
-  }
-  return braces(str, options);
-};
-
-/**
- * Expand `{foo,bar}` or `{1..5}` braces in the
- * given `string`.
- *
- * @param  {String} `str`
- * @param  {Array} `arr`
- * @param  {Object} `options`
- * @return {Array}
- */
-
-function braces(str, arr, options) {
-  if (str === '') {
-    return [];
-  }
-
-  if (!Array.isArray(arr)) {
-    options = arr;
-    arr = [];
-  }
-
-  var opts = options || {};
-  arr = arr || [];
-
-  if (typeof opts.nodupes === 'undefined') {
-    opts.nodupes = true;
-  }
-
-  var fn = opts.fn;
-  var es6;
-
-  if (typeof opts === 'function') {
-    fn = opts;
-    opts = {};
-  }
-
-  if (!(patternRe instanceof RegExp)) {
-    patternRe = patternRegex();
-  }
-
-  var matches = str.match(patternRe) || [];
-  var m = matches[0];
-
-  switch(m) {
-    case '\\,':
-      return escapeCommas(str, arr, opts);
-    case '\\.':
-      return escapeDots(str, arr, opts);
-    case '\/.':
-      return escapePaths(str, arr, opts);
-    case ' ':
-      return splitWhitespace(str);
-    case '{,}':
-      return exponential(str, opts, braces);
-    case '{}':
-      return emptyBraces(str, arr, opts);
-    case '\\{':
-    case '\\}':
-      return escapeBraces(str, arr, opts);
-    case '${':
-      if (!/\{[^{]+\{/.test(str)) {
-        return arr.concat(str);
-      } else {
-        es6 = true;
-        str = tokens.before(str, es6Regex());
-      }
-  }
-
-  if (!(braceRe instanceof RegExp)) {
-    braceRe = braceRegex();
-  }
-
-  var match = braceRe.exec(str);
-  if (match == null) {
-    return [str];
-  }
-
-  var outter = match[1];
-  var inner = match[2];
-  if (inner === '') { return [str]; }
-
-  var segs, segsLength;
-
-  if (inner.indexOf('..') !== -1) {
-    segs = expand(inner, opts, fn) || inner.split(',');
-    segsLength = segs.length;
-
-  } else if (inner[0] === '"' || inner[0] === '\'') {
-    return arr.concat(str.split(/['"]/).join(''));
-
-  } else {
-    segs = inner.split(',');
-    if (opts.makeRe) {
-      return braces(str.replace(outter, wrap(segs, '|')), opts);
-    }
-
-    segsLength = segs.length;
-    if (segsLength === 1 && opts.bash) {
-      segs[0] = wrap(segs[0], '\\');
-    }
-  }
-
-  var len = segs.length;
-  var i = 0, val;
-
-  while (len--) {
-    var path = segs[i++];
-
-    if (/(\.[^.\/])/.test(path)) {
-      if (segsLength > 1) {
-        return segs;
-      } else {
-        return [str];
-      }
-    }
-
-    val = splice(str, outter, path);
-
-    if (/\{[^{}]+?\}/.test(val)) {
-      arr = braces(val, arr, opts);
-    } else if (val !== '') {
-      if (opts.nodupes && arr.indexOf(val) !== -1) { continue; }
-      arr.push(es6 ? tokens.after(val) : val);
-    }
-  }
-
-  if (opts.strict) { return filter(arr, filterEmpty); }
-  return arr;
-}
-
-/**
- * Expand exponential ranges
- *
- *   `a{,}{,}` => ['a', 'a', 'a', 'a']
- */
-
-function exponential(str, options, fn) {
-  if (typeof options === 'function') {
-    fn = options;
-    options = null;
-  }
-
-  var opts = options || {};
-  var esc = '__ESC_EXP__';
-  var exp = 0;
-  var res;
-
-  var parts = str.split('{,}');
-  if (opts.nodupes) {
-    return fn(parts.join(''), opts);
-  }
-
-  exp = parts.length - 1;
-  res = fn(parts.join(esc), opts);
-  var len = res.length;
-  var arr = [];
-  var i = 0;
-
-  while (len--) {
-    var ele = res[i++];
-    var idx = ele.indexOf(esc);
-
-    if (idx === -1) {
-      arr.push(ele);
-
-    } else {
-      ele = ele.split('__ESC_EXP__').join('');
-      if (!!ele && opts.nodupes !== false) {
-        arr.push(ele);
-
-      } else {
-        var num = Math.pow(2, exp);
-        arr.push.apply(arr, repeat(ele, num));
-      }
-    }
-  }
-  return arr;
-}
-
-/**
- * Wrap a value with parens, brackets or braces,
- * based on the given character/separator.
- *
- * @param  {String|Array} `val`
- * @param  {String} `ch`
- * @return {String}
- */
-
-function wrap(val, ch) {
-  if (ch === '|') {
-    return '(' + val.join(ch) + ')';
-  }
-  if (ch === ',') {
-    return '{' + val.join(ch) + '}';
-  }
-  if (ch === '-') {
-    return '[' + val.join(ch) + ']';
-  }
-  if (ch === '\\') {
-    return '\\{' + val + '\\}';
-  }
-}
-
-/**
- * Handle empty braces: `{}`
- */
-
-function emptyBraces(str, arr, opts) {
-  return braces(str.split('{}').join('\\{\\}'), arr, opts);
-}
-
-/**
- * Filter out empty-ish values
- */
-
-function filterEmpty(ele) {
-  return !!ele && ele !== '\\';
-}
-
-/**
- * Handle patterns with whitespace
- */
-
-function splitWhitespace(str) {
-  var segs = str.split(' ');
-  var len = segs.length;
-  var res = [];
-  var i = 0;
-
-  while (len--) {
-    res.push.apply(res, braces(segs[i++]));
-  }
-  return res;
-}
-
-/**
- * Handle escaped braces: `\\{foo,bar}`
- */
-
-function escapeBraces(str, arr, opts) {
-  if (!/\{[^{]+\{/.test(str)) {
-    return arr.concat(str.split('\\').join(''));
-  } else {
-    str = str.split('\\{').join('__LT_BRACE__');
-    str = str.split('\\}').join('__RT_BRACE__');
-    return map(braces(str, arr, opts), function(ele) {
-      ele = ele.split('__LT_BRACE__').join('{');
-      return ele.split('__RT_BRACE__').join('}');
-    });
-  }
-}
-
-/**
- * Handle escaped dots: `{1\\.2}`
- */
-
-function escapeDots(str, arr, opts) {
-  if (!/[^\\]\..+\\\./.test(str)) {
-    return arr.concat(str.split('\\').join(''));
-  } else {
-    str = str.split('\\.').join('__ESC_DOT__');
-    return map(braces(str, arr, opts), function(ele) {
-      return ele.split('__ESC_DOT__').join('.');
-    });
-  }
-}
-
-/**
- * Handle escaped dots: `{1\\.2}`
- */
-
-function escapePaths(str, arr, opts) {
-  str = str.split('\/.').join('__ESC_PATH__');
-  return map(braces(str, arr, opts), function(ele) {
-    return ele.split('__ESC_PATH__').join('\/.');
-  });
-}
-
-/**
- * Handle escaped commas: `{a\\,b}`
- */
-
-function escapeCommas(str, arr, opts) {
-  if (!/\w,/.test(str)) {
-    return arr.concat(str.split('\\').join(''));
-  } else {
-    str = str.split('\\,').join('__ESC_COMMA__');
-    return map(braces(str, arr, opts), function(ele) {
-      return ele.split('__ESC_COMMA__').join(',');
-    });
-  }
-}
-
-/**
- * Regex for common patterns
- */
-
-function patternRegex() {
-  return /\${|( (?=[{,}])|(?=[{,}]) )|{}|{,}|\\,(?=.*[{}])|\/\.(?=.*[{}])|\\\.(?={)|\\{|\\}/;
-}
-
-/**
- * Braces regex.
- */
-
-function braceRegex() {
-  return /.*(\\?\{([^}]+)\})/;
-}
-
-/**
- * es6 delimiter regex.
- */
-
-function es6Regex() {
-  return /\$\{([^}]+)\}/;
-}
-
-var braceRe;
-var patternRe;
-
-/**
- * Faster alternative to `String.replace()` when the
- * index of the token to be replaces can't be supplied
- */
-
-function splice(str, token, replacement) {
-  var i = str.indexOf(token);
-  return str.substr(0, i) + replacement
-    + str.substr(i + token.length);
-}
-
-/**
- * Fast array map
- */
-
-function map(arr, fn) {
-  if (arr == null) {
-    return [];
-  }
-
-  var len = arr.length;
-  var res = new Array(len);
-  var i = -1;
-
-  while (++i < len) {
-    res[i] = fn(arr[i], i, arr);
-  }
-
-  return res;
-}
-
-/**
- * Fast array filter
- */
-
-function filter(arr, cb) {
-  if (arr == null) return [];
-  if (typeof cb !== 'function') {
-    throw new TypeError('braces: filter expects a callback function.');
-  }
-
-  var len = arr.length;
-  var res = arr.slice();
-  var i = 0;
-
-  while (len--) {
-    if (!cb(arr[len], i++)) {
-      res.splice(len, 1);
-    }
-  }
-  return res;
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/expand-brackets/index.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/expand-brackets/index.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * expand-brackets <https://github.com/jonschlinkert/expand-brackets>
- *
- * Copyright (c) 2015 Jon Schlinkert.
- * Licensed under the MIT license.
- */
-
-
-
-var isPosixBracket = __webpack_require__(/*! is-posix-bracket */ "./node_modules/is-posix-bracket/index.js");
-
-/**
- * POSIX character classes
- */
-
-var POSIX = {
-  alnum: 'a-zA-Z0-9',
-  alpha: 'a-zA-Z',
-  blank: ' \\t',
-  cntrl: '\\x00-\\x1F\\x7F',
-  digit: '0-9',
-  graph: '\\x21-\\x7E',
-  lower: 'a-z',
-  print: '\\x20-\\x7E',
-  punct: '-!"#$%&\'()\\*+,./:;<=>?@[\\]^_`{|}~',
-  space: ' \\t\\r\\n\\v\\f',
-  upper: 'A-Z',
-  word:  'A-Za-z0-9_',
-  xdigit: 'A-Fa-f0-9',
-};
-
-/**
- * Expose `brackets`
- */
-
-module.exports = brackets;
-
-function brackets(str) {
-  if (!isPosixBracket(str)) {
-    return str;
-  }
-
-  var negated = false;
-  if (str.indexOf('[^') !== -1) {
-    negated = true;
-    str = str.split('[^').join('[');
-  }
-  if (str.indexOf('[!') !== -1) {
-    negated = true;
-    str = str.split('[!').join('[');
-  }
-
-  var a = str.split('[');
-  var b = str.split(']');
-  var imbalanced = a.length !== b.length;
-
-  var parts = str.split(/(?::\]\[:|\[?\[:|:\]\]?)/);
-  var len = parts.length, i = 0;
-  var end = '', beg = '';
-  var res = [];
-
-  // start at the end (innermost) first
-  while (len--) {
-    var inner = parts[i++];
-    if (inner === '^[!' || inner === '[!') {
-      inner = '';
-      negated = true;
-    }
-
-    var prefix = negated ? '^' : '';
-    var ch = POSIX[inner];
-
-    if (ch) {
-      res.push('[' + prefix + ch + ']');
-    } else if (inner) {
-      if (/^\[?\w-\w\]?$/.test(inner)) {
-        if (i === parts.length) {
-          res.push('[' + prefix + inner);
-        } else if (i === 1) {
-          res.push(prefix + inner + ']');
-        } else {
-          res.push(prefix + inner);
-        }
-      } else {
-        if (i === 1) {
-          beg += inner;
-        } else if (i === parts.length) {
-          end += inner;
-        } else {
-          res.push('[' + prefix + inner + ']');
-        }
-      }
-    }
-  }
-
-  var result = res.join('|');
-  var rlen = res.length || 1;
-  if (rlen > 1) {
-    result = '(?:' + result + ')';
-    rlen = 1;
-  }
-  if (beg) {
-    rlen++;
-    if (beg.charAt(0) === '[') {
-      if (imbalanced) {
-        beg = '\\[' + beg.slice(1);
-      } else {
-        beg += ']';
-      }
-    }
-    result = beg + result;
-  }
-  if (end) {
-    rlen++;
-    if (end.slice(-1) === ']') {
-      if (imbalanced) {
-        end = end.slice(0, end.length - 1) + '\\]';
-      } else {
-        end = '[' + end;
-      }
-    }
-    result += end;
-  }
-
-  if (rlen > 1) {
-    result = result.split('][').join(']|[');
-    if (result.indexOf('|') !== -1 && !/\(\?/.test(result)) {
-      result = '(?:' + result + ')';
-    }
-  }
-
-  result = result.replace(/\[+=|=\]+/g, '\\b');
-  return result;
-}
-
-brackets.makeRe = function(pattern) {
-  try {
-    return new RegExp(brackets(pattern));
-  } catch (err) {}
-};
-
-brackets.isMatch = function(str, pattern) {
-  try {
-    return brackets.makeRe(pattern).test(str);
-  } catch (err) {
-    return false;
-  }
-};
-
-brackets.match = function(arr, pattern) {
-  var len = arr.length, i = 0;
-  var res = arr.slice();
-
-  var re = brackets.makeRe(pattern);
-  while (i < len) {
-    var ele = arr[i++];
-    if (!re.test(ele)) {
-      continue;
-    }
-    res.splice(i, 1);
-  }
-  return res;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/extglob/index.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/extglob/index.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * extglob <https://github.com/jonschlinkert/extglob>
- *
- * Copyright (c) 2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-/**
- * Module dependencies
- */
-
-var isExtglob = __webpack_require__(/*! is-extglob */ "./node_modules/is-extglob/index.js");
-var re, cache = {};
-
-/**
- * Expose `extglob`
- */
-
-module.exports = extglob;
-
-/**
- * Convert the given extglob `string` to a regex-compatible
- * string.
- *
- * ```js
- * var extglob = require('extglob');
- * extglob('!(a?(b))');
- * //=> '(?!a(?:b)?)[^/]*?'
- * ```
- *
- * @param {String} `str` The string to convert.
- * @param {Object} `options`
- *   @option {Boolean} [options] `esc` If `false` special characters will not be escaped. Defaults to `true`.
- *   @option {Boolean} [options] `regex` If `true` a regular expression is returned instead of a string.
- * @return {String}
- * @api public
- */
-
-
-function extglob(str, opts) {
-  opts = opts || {};
-  var o = {}, i = 0;
-
-  // fix common character reversals
-  // '*!(.js)' => '*.!(js)'
-  str = str.replace(/!\(([^\w*()])/g, '$1!(');
-
-  // support file extension negation
-  str = str.replace(/([*\/])\.!\([*]\)/g, function (m, ch) {
-    if (ch === '/') {
-      return escape('\\/[^.]+');
-    }
-    return escape('[^.]+');
-  });
-
-  // create a unique key for caching by
-  // combining the string and options
-  var key = str
-    + String(!!opts.regex)
-    + String(!!opts.contains)
-    + String(!!opts.escape);
-
-  if (cache.hasOwnProperty(key)) {
-    return cache[key];
-  }
-
-  if (!(re instanceof RegExp)) {
-    re = regex();
-  }
-
-  opts.negate = false;
-  var m;
-
-  while (m = re.exec(str)) {
-    var prefix = m[1];
-    var inner = m[3];
-    if (prefix === '!') {
-      opts.negate = true;
-    }
-
-    var id = '__EXTGLOB_' + (i++) + '__';
-    // use the prefix of the _last_ (outtermost) pattern
-    o[id] = wrap(inner, prefix, opts.escape);
-    str = str.split(m[0]).join(id);
-  }
-
-  var keys = Object.keys(o);
-  var len = keys.length;
-
-  // we have to loop again to allow us to convert
-  // patterns in reverse order (starting with the
-  // innermost/last pattern first)
-  while (len--) {
-    var prop = keys[len];
-    str = str.split(prop).join(o[prop]);
-  }
-
-  var result = opts.regex
-    ? toRegex(str, opts.contains, opts.negate)
-    : str;
-
-  result = result.split('.').join('\\.');
-
-  // cache the result and return it
-  return (cache[key] = result);
-}
-
-/**
- * Convert `string` to a regex string.
- *
- * @param  {String} `str`
- * @param  {String} `prefix` Character that determines how to wrap the string.
- * @param  {Boolean} `esc` If `false` special characters will not be escaped. Defaults to `true`.
- * @return {String}
- */
-
-function wrap(inner, prefix, esc) {
-  if (esc) inner = escape(inner);
-
-  switch (prefix) {
-    case '!':
-      return '(?!' + inner + ')[^/]' + (esc ? '%%%~' : '*?');
-    case '@':
-      return '(?:' + inner + ')';
-    case '+':
-      return '(?:' + inner + ')+';
-    case '*':
-      return '(?:' + inner + ')' + (esc ? '%%' : '*')
-    case '?':
-      return '(?:' + inner + '|)';
-    default:
-      return inner;
-  }
-}
-
-function escape(str) {
-  str = str.split('*').join('[^/]%%%~');
-  str = str.split('.').join('\\.');
-  return str;
-}
-
-/**
- * extglob regex.
- */
-
-function regex() {
-  return /(\\?[@?!+*$]\\?)(\(([^()]*?)\))/;
-}
-
-/**
- * Negation regex
- */
-
-function negate(str) {
-  return '(?!^' + str + ').*$';
-}
-
-/**
- * Create the regex to do the matching. If
- * the leading character in the `pattern` is `!`
- * a negation regex is returned.
- *
- * @param {String} `pattern`
- * @param {Boolean} `contains` Allow loose matching.
- * @param {Boolean} `isNegated` True if the pattern is a negation pattern.
- */
-
-function toRegex(pattern, contains, isNegated) {
-  var prefix = contains ? '^' : '';
-  var after = contains ? '$' : '';
-  pattern = ('(?:' + pattern + ')' + after);
-  if (isNegated) {
-    pattern = prefix + negate(pattern);
-  }
-  return new RegExp(prefix + pattern);
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/kind-of/index.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/kind-of/index.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(Buffer) {var toString = Object.prototype.toString;
-
-/**
- * Get the native `typeof` a value.
- *
- * @param  {*} `val`
- * @return {*} Native javascript type
- */
-
-module.exports = function kindOf(val) {
-  if (val === undefined) {
-    return 'undefined';
-  }
-  if (val === null) {
-    return 'null';
-  }
-  if (val === true || val === false || val instanceof Boolean) {
-    return 'boolean';
-  }
-  if (typeof val !== 'object') {
-    return typeof val;
-  }
-  if (Array.isArray(val)) {
-    return 'array';
-  }
-
-  var type = toString.call(val);
-
-  if (val instanceof RegExp || type === '[object RegExp]') {
-    return 'regexp';
-  }
-  if (val instanceof Date || type === '[object Date]') {
-    return 'date';
-  }
-  if (type === '[object Function]') {
-    return 'function';
-  }
-  if (type === '[object Arguments]') {
-    return 'arguments';
-  }
-  if (typeof Buffer !== 'undefined' && Buffer.isBuffer(val)) {
-    return 'buffer';
-  }
-  return type.slice(8, -1).toLowerCase();
-};
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/micromatch/index.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/micromatch/index.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * micromatch <https://github.com/jonschlinkert/micromatch>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-var expand = __webpack_require__(/*! ./lib/expand */ "./node_modules/filter-array/node_modules/micromatch/lib/expand.js");
-var utils = __webpack_require__(/*! ./lib/utils */ "./node_modules/filter-array/node_modules/micromatch/lib/utils.js");
-
-/**
- * The main function. Pass an array of filepaths,
- * and a string or array of glob patterns
- *
- * @param  {Array|String} `files`
- * @param  {Array|String} `patterns`
- * @param  {Object} `opts`
- * @return {Array} Array of matches
- */
-
-function micromatch(files, patterns, opts) {
-  if (!files || !patterns) return [];
-  opts = opts || {};
-
-  if (typeof opts.cache === 'undefined') {
-    opts.cache = true;
-  }
-
-  if (!Array.isArray(patterns)) {
-    return match(files, patterns, opts);
-  }
-
-  var len = patterns.length, i = 0;
-  var omit = [], keep = [];
-
-  while (len--) {
-    var glob = patterns[i++];
-    if (typeof glob === 'string' && glob.charCodeAt(0) === 33 /* ! */) {
-      omit.push.apply(omit, match(files, glob.slice(1), opts));
-    } else {
-      keep.push.apply(keep, match(files, glob, opts));
-    }
-  }
-  return utils.diff(keep, omit);
-}
-
-/**
- * Return an array of files that match the given glob pattern.
- *
- * This function is called by the main `micromatch` function If you only
- * need to pass a single pattern you might get very minor speed improvements
- * using this function.
- *
- * @param  {Array} `files`
- * @param  {String} `pattern`
- * @param  {Object} `options`
- * @return {Array}
- */
-
-function match(files, pattern, opts) {
-  if (utils.typeOf(files) !== 'string' && !Array.isArray(files)) {
-    throw new Error(msg('match', 'files', 'a string or array'));
-  }
-
-  files = utils.arrayify(files);
-  opts = opts || {};
-
-  var negate = opts.negate || false;
-  var orig = pattern;
-
-  if (typeof pattern === 'string') {
-    negate = pattern.charAt(0) === '!';
-    if (negate) {
-      pattern = pattern.slice(1);
-    }
-
-    // we need to remove the character regardless,
-    // so the above logic is still needed
-    if (opts.nonegate === true) {
-      negate = false;
-    }
-  }
-
-  var _isMatch = matcher(pattern, opts);
-  var len = files.length, i = 0;
-  var res = [];
-
-  while (i < len) {
-    var file = files[i++];
-    var fp = utils.unixify(file, opts);
-
-    if (!_isMatch(fp)) { continue; }
-    res.push(fp);
-  }
-
-  if (res.length === 0) {
-    if (opts.failglob === true) {
-      throw new Error('micromatch.match() found no matches for: "' + orig + '".');
-    }
-
-    if (opts.nonull || opts.nullglob) {
-      res.push(utils.unescapeGlob(orig));
-    }
-  }
-
-  // if `negate` was defined, diff negated files
-  if (negate) { res = utils.diff(files, res); }
-
-  // if `ignore` was defined, diff ignored filed
-  if (opts.ignore && opts.ignore.length) {
-    pattern = opts.ignore;
-    opts = utils.omit(opts, ['ignore']);
-    res = utils.diff(res, micromatch(res, pattern, opts));
-  }
-
-  if (opts.nodupes) {
-    return utils.unique(res);
-  }
-  return res;
-}
-
-/**
- * Returns a function that takes a glob pattern or array of glob patterns
- * to be used with `Array#filter()`. (Internally this function generates
- * the matching function using the [matcher] method).
- *
- * ```js
- * var fn = mm.filter('[a-c]');
- * ['a', 'b', 'c', 'd', 'e'].filter(fn);
- * //=> ['a', 'b', 'c']
- * ```
- * @param  {String|Array} `patterns` Can be a glob or array of globs.
- * @param  {Options} `opts` Options to pass to the [matcher] method.
- * @return {Function} Filter function to be passed to `Array#filter()`.
- */
-
-function filter(patterns, opts) {
-  if (!Array.isArray(patterns) && typeof patterns !== 'string') {
-    throw new TypeError(msg('filter', 'patterns', 'a string or array'));
-  }
-
-  patterns = utils.arrayify(patterns);
-  var len = patterns.length, i = 0;
-  var patternMatchers = Array(len);
-  while (i < len) {
-    patternMatchers[i] = matcher(patterns[i++], opts);
-  }
-
-  return function(fp) {
-    if (fp == null) return [];
-    var len = patternMatchers.length, i = 0;
-    var res = true;
-
-    fp = utils.unixify(fp, opts);
-    while (i < len) {
-      var fn = patternMatchers[i++];
-      if (!fn(fp)) {
-        res = false;
-        break;
-      }
-    }
-    return res;
-  };
-}
-
-/**
- * Returns true if the filepath contains the given
- * pattern. Can also return a function for matching.
- *
- * ```js
- * isMatch('foo.md', '*.md', {});
- * //=> true
- *
- * isMatch('*.md', {})('foo.md')
- * //=> true
- * ```
- * @param  {String} `fp`
- * @param  {String} `pattern`
- * @param  {Object} `opts`
- * @return {Boolean}
- */
-
-function isMatch(fp, pattern, opts) {
-  if (typeof fp !== 'string') {
-    throw new TypeError(msg('isMatch', 'filepath', 'a string'));
-  }
-
-  fp = utils.unixify(fp, opts);
-  if (utils.typeOf(pattern) === 'object') {
-    return matcher(fp, pattern);
-  }
-  return matcher(pattern, opts)(fp);
-}
-
-/**
- * Returns true if the filepath matches the
- * given pattern.
- */
-
-function contains(fp, pattern, opts) {
-  if (typeof fp !== 'string') {
-    throw new TypeError(msg('contains', 'pattern', 'a string'));
-  }
-
-  opts = opts || {};
-  opts.contains = (pattern !== '');
-  fp = utils.unixify(fp, opts);
-
-  if (opts.contains && !utils.isGlob(pattern)) {
-    return fp.indexOf(pattern) !== -1;
-  }
-  return matcher(pattern, opts)(fp);
-}
-
-/**
- * Returns true if a file path matches any of the
- * given patterns.
- *
- * @param  {String} `fp` The filepath to test.
- * @param  {String|Array} `patterns` Glob patterns to use.
- * @param  {Object} `opts` Options to pass to the `matcher()` function.
- * @return {String}
- */
-
-function any(fp, patterns, opts) {
-  if (!Array.isArray(patterns) && typeof patterns !== 'string') {
-    throw new TypeError(msg('any', 'patterns', 'a string or array'));
-  }
-
-  patterns = utils.arrayify(patterns);
-  var len = patterns.length;
-
-  fp = utils.unixify(fp, opts);
-  while (len--) {
-    var isMatch = matcher(patterns[len], opts);
-    if (isMatch(fp)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-/**
- * Filter the keys of an object with the given `glob` pattern
- * and `options`
- *
- * @param  {Object} `object`
- * @param  {Pattern} `object`
- * @return {Array}
- */
-
-function matchKeys(obj, glob, options) {
-  if (utils.typeOf(obj) !== 'object') {
-    throw new TypeError(msg('matchKeys', 'first argument', 'an object'));
-  }
-
-  var fn = matcher(glob, options);
-  var res = {};
-
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key) && fn(key)) {
-      res[key] = obj[key];
-    }
-  }
-  return res;
-}
-
-/**
- * Return a function for matching based on the
- * given `pattern` and `options`.
- *
- * @param  {String} `pattern`
- * @param  {Object} `options`
- * @return {Function}
- */
-
-function matcher(pattern, opts) {
-  // pattern is a function
-  if (typeof pattern === 'function') {
-    return pattern;
-  }
-  // pattern is a regex
-  if (pattern instanceof RegExp) {
-    return function(fp) {
-      return pattern.test(fp);
-    };
-  }
-
-  if (typeof pattern !== 'string') {
-    throw new TypeError(msg('matcher', 'pattern', 'a string, regex, or function'));
-  }
-
-  // strings, all the way down...
-  pattern = utils.unixify(pattern, opts);
-
-  // pattern is a non-glob string
-  if (!utils.isGlob(pattern)) {
-    return utils.matchPath(pattern, opts);
-  }
-  // pattern is a glob string
-  var re = makeRe(pattern, opts);
-
-  // `matchBase` is defined
-  if (opts && opts.matchBase) {
-    return utils.hasFilename(re, opts);
-  }
-  // `matchBase` is not defined
-  return function(fp) {
-    fp = utils.unixify(fp, opts);
-    return re.test(fp);
-  };
-}
-
-/**
- * Create and cache a regular expression for matching
- * file paths.
- *
- * If the leading character in the `glob` is `!`, a negation
- * regex is returned.
- *
- * @param  {String} `glob`
- * @param  {Object} `options`
- * @return {RegExp}
- */
-
-function toRegex(glob, options) {
-  // clone options to prevent  mutating the original object
-  var opts = Object.create(options || {});
-  var flags = opts.flags || '';
-  if (opts.nocase && flags.indexOf('i') === -1) {
-    flags += 'i';
-  }
-
-  var parsed = expand(glob, opts);
-
-  // pass in tokens to avoid parsing more than once
-  opts.negated = opts.negated || parsed.negated;
-  opts.negate = opts.negated;
-  glob = wrapGlob(parsed.pattern, opts);
-  var re;
-
-  try {
-    re = new RegExp(glob, flags);
-    return re;
-  } catch (err) {
-    err.reason = 'micromatch invalid regex: (' + re + ')';
-    if (opts.strict) throw new SyntaxError(err);
-  }
-
-  // we're only here if a bad pattern was used and the user
-  // passed `options.silent`, so match nothing
-  return /$^/;
-}
-
-/**
- * Create the regex to do the matching. If the leading
- * character in the `glob` is `!` a negation regex is returned.
- *
- * @param {String} `glob`
- * @param {Boolean} `negate`
- */
-
-function wrapGlob(glob, opts) {
-  var prefix = (opts && !opts.contains) ? '^' : '';
-  var after = (opts && !opts.contains) ? '$' : '';
-  glob = ('(?:' + glob + ')' + after);
-  if (opts && opts.negate) {
-    return prefix + ('(?!^' + glob + ').*$');
-  }
-  return prefix + glob;
-}
-
-/**
- * Create and cache a regular expression for matching file paths.
- * If the leading character in the `glob` is `!`, a negation
- * regex is returned.
- *
- * @param  {String} `glob`
- * @param  {Object} `options`
- * @return {RegExp}
- */
-
-function makeRe(glob, opts) {
-  if (utils.typeOf(glob) !== 'string') {
-    throw new Error(msg('makeRe', 'glob', 'a string'));
-  }
-  return utils.cache(toRegex, glob, opts);
-}
-
-/**
- * Make error messages consistent. Follows this format:
- *
- * ```js
- * msg(methodName, argNumber, nativeType);
- * // example:
- * msg('matchKeys', 'first', 'an object');
- * ```
- *
- * @param  {String} `method`
- * @param  {String} `num`
- * @param  {String} `type`
- * @return {String}
- */
-
-function msg(method, what, type) {
-  return 'micromatch.' + method + '(): ' + what + ' should be ' + type + '.';
-}
-
-/**
- * Public methods
- */
-
-/* eslint no-multi-spaces: 0 */
-micromatch.any       = any;
-micromatch.braces    = micromatch.braceExpand = utils.braces;
-micromatch.contains  = contains;
-micromatch.expand    = expand;
-micromatch.filter    = filter;
-micromatch.isMatch   = isMatch;
-micromatch.makeRe    = makeRe;
-micromatch.match     = match;
-micromatch.matcher   = matcher;
-micromatch.matchKeys = matchKeys;
-
-/**
- * Expose `micromatch`
- */
-
-module.exports = micromatch;
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/micromatch/lib/chars.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/micromatch/lib/chars.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var chars = {}, unesc, temp;
-
-function reverse(object, prepender) {
-  return Object.keys(object).reduce(function(reversed, key) {
-    var newKey = prepender ? prepender + key : key; // Optionally prepend a string to key.
-    reversed[object[key]] = newKey; // Swap key and value.
-    return reversed; // Return the result.
-  }, {});
-}
-
-/**
- * Regex for common characters
- */
-
-chars.escapeRegex = {
-  '?': /\?/g,
-  '@': /\@/g,
-  '!': /\!/g,
-  '+': /\+/g,
-  '*': /\*/g,
-  '(': /\(/g,
-  ')': /\)/g,
-  '[': /\[/g,
-  ']': /\]/g
-};
-
-/**
- * Escape characters
- */
-
-chars.ESC = {
-  '?': '__UNESC_QMRK__',
-  '@': '__UNESC_AMPE__',
-  '!': '__UNESC_EXCL__',
-  '+': '__UNESC_PLUS__',
-  '*': '__UNESC_STAR__',
-  ',': '__UNESC_COMMA__',
-  '(': '__UNESC_LTPAREN__',
-  ')': '__UNESC_RTPAREN__',
-  '[': '__UNESC_LTBRACK__',
-  ']': '__UNESC_RTBRACK__'
-};
-
-/**
- * Unescape characters
- */
-
-chars.UNESC = unesc || (unesc = reverse(chars.ESC, '\\'));
-
-chars.ESC_TEMP = {
-  '?': '__TEMP_QMRK__',
-  '@': '__TEMP_AMPE__',
-  '!': '__TEMP_EXCL__',
-  '*': '__TEMP_STAR__',
-  '+': '__TEMP_PLUS__',
-  ',': '__TEMP_COMMA__',
-  '(': '__TEMP_LTPAREN__',
-  ')': '__TEMP_RTPAREN__',
-  '[': '__TEMP_LTBRACK__',
-  ']': '__TEMP_RTBRACK__'
-};
-
-chars.TEMP = temp || (temp = reverse(chars.ESC_TEMP));
-
-module.exports = chars;
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/micromatch/lib/expand.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/micromatch/lib/expand.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * micromatch <https://github.com/jonschlinkert/micromatch>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-var utils = __webpack_require__(/*! ./utils */ "./node_modules/filter-array/node_modules/micromatch/lib/utils.js");
-var Glob = __webpack_require__(/*! ./glob */ "./node_modules/filter-array/node_modules/micromatch/lib/glob.js");
-
-/**
- * Expose `expand`
- */
-
-module.exports = expand;
-
-/**
- * Expand a glob pattern to resolve braces and
- * similar patterns before converting to regex.
- *
- * @param  {String|Array} `pattern`
- * @param  {Array} `files`
- * @param  {Options} `opts`
- * @return {Array}
- */
-
-function expand(pattern, options) {
-  if (typeof pattern !== 'string') {
-    throw new TypeError('micromatch.expand(): argument should be a string.');
-  }
-
-  var glob = new Glob(pattern, options || {});
-  var opts = glob.options;
-
-  if (!utils.isGlob(pattern)) {
-    glob.pattern = glob.pattern.replace(/([\/.])/g, '\\$1');
-    return glob;
-  }
-
-  glob.pattern = glob.pattern.replace(/(\+)(?!\()/g, '\\$1');
-  glob.pattern = glob.pattern.split('$').join('\\$');
-
-  if (typeof opts.braces !== 'boolean' && typeof opts.nobraces !== 'boolean') {
-    opts.braces = true;
-  }
-
-  if (glob.pattern === '.*') {
-    return {
-      pattern: '\\.' + star,
-      tokens: tok,
-      options: opts
-    };
-  }
-
-  if (glob.pattern === '*') {
-    return {
-      pattern: oneStar(opts.dot),
-      tokens: tok,
-      options: opts
-    };
-  }
-
-  // parse the glob pattern into tokens
-  glob.parse();
-  var tok = glob.tokens;
-  tok.is.negated = opts.negated;
-
-  // dotfile handling
-  if ((opts.dotfiles === true || tok.is.dotfile) && opts.dot !== false) {
-    opts.dotfiles = true;
-    opts.dot = true;
-  }
-
-  if ((opts.dotdirs === true || tok.is.dotdir) && opts.dot !== false) {
-    opts.dotdirs = true;
-    opts.dot = true;
-  }
-
-  // check for braces with a dotfile pattern
-  if (/[{,]\./.test(glob.pattern)) {
-    opts.makeRe = false;
-    opts.dot = true;
-  }
-
-  if (opts.nonegate !== true) {
-    opts.negated = glob.negated;
-  }
-
-  // if the leading character is a dot or a slash, escape it
-  if (glob.pattern.charAt(0) === '.' && glob.pattern.charAt(1) !== '/') {
-    glob.pattern = '\\' + glob.pattern;
-  }
-
-  /**
-   * Extended globs
-   */
-
-  // expand braces, e.g `{1..5}`
-  glob.track('before braces');
-  if (tok.is.braces) {
-    glob.braces();
-  }
-  glob.track('after braces');
-
-  // expand extglobs, e.g `foo/!(a|b)`
-  glob.track('before extglob');
-  if (tok.is.extglob) {
-    glob.extglob();
-  }
-  glob.track('after extglob');
-
-  // expand brackets, e.g `[[:alpha:]]`
-  glob.track('before brackets');
-  if (tok.is.brackets) {
-    glob.brackets();
-  }
-  glob.track('after brackets');
-
-  // special patterns
-  glob._replace('[!', '[^');
-  glob._replace('(?', '(%~');
-  glob._replace(/\[\]/, '\\[\\]');
-  glob._replace('/[', '/' + (opts.dot ? dotfiles : nodot) + '[', true);
-  glob._replace('/?', '/' + (opts.dot ? dotfiles : nodot) + '[^/]', true);
-  glob._replace('/.', '/(?=.)\\.', true);
-
-  // windows drives
-  glob._replace(/^(\w):([\\\/]+?)/gi, '(?=.)$1:$2', true);
-
-  // negate slashes in exclusion ranges
-  if (glob.pattern.indexOf('[^') !== -1) {
-    glob.pattern = negateSlash(glob.pattern);
-  }
-
-  if (opts.globstar !== false && glob.pattern === '**') {
-    glob.pattern = globstar(opts.dot);
-
-  } else {
-    glob.pattern = balance(glob.pattern, '[', ']');
-    glob.escape(glob.pattern);
-
-    // if the pattern has `**`
-    if (tok.is.globstar) {
-      glob.pattern = collapse(glob.pattern, '/**');
-      glob.pattern = collapse(glob.pattern, '**/');
-      glob._replace('/**/', '(?:/' + globstar(opts.dot) + '/|/)', true);
-      glob._replace(/\*{2,}/g, '**');
-
-      // 'foo/*'
-      glob._replace(/(\w+)\*(?!\/)/g, '$1[^/]*?', true);
-      glob._replace(/\*\*\/\*(\w)/g, globstar(opts.dot) + '\\/' + (opts.dot ? dotfiles : nodot) + '[^/]*?$1', true);
-
-      if (opts.dot !== true) {
-        glob._replace(/\*\*\/(.)/g, '(?:**\\/|)$1');
-      }
-
-      // 'foo/**' or '{**,*}', but not 'foo**'
-      if (tok.path.dirname !== '' || /,\*\*|\*\*,/.test(glob.orig)) {
-        glob._replace('**', globstar(opts.dot), true);
-      }
-    }
-
-    // ends with /*
-    glob._replace(/\/\*$/, '\\/' + oneStar(opts.dot), true);
-    // ends with *, no slashes
-    glob._replace(/(?!\/)\*$/, star, true);
-    // has 'n*.' (partial wildcard w/ file extension)
-    glob._replace(/([^\/]+)\*/, '$1' + oneStar(true), true);
-    // has '*'
-    glob._replace('*', oneStar(opts.dot), true);
-    glob._replace('?.', '?\\.', true);
-    glob._replace('?:', '?:', true);
-
-    glob._replace(/\?+/g, function(match) {
-      var len = match.length;
-      if (len === 1) {
-        return qmark;
-      }
-      return qmark + '{' + len + '}';
-    });
-
-    // escape '.abc' => '\\.abc'
-    glob._replace(/\.([*\w]+)/g, '\\.$1');
-    // fix '[^\\\\/]'
-    glob._replace(/\[\^[\\\/]+\]/g, qmark);
-    // '///' => '\/'
-    glob._replace(/\/+/g, '\\/');
-    // '\\\\\\' => '\\'
-    glob._replace(/\\{2,}/g, '\\');
-  }
-
-  // unescape previously escaped patterns
-  glob.unescape(glob.pattern);
-  glob._replace('__UNESC_STAR__', '*');
-
-  // escape dots that follow qmarks
-  glob._replace('?.', '?\\.');
-
-  // remove unnecessary slashes in character classes
-  glob._replace('[^\\/]', qmark);
-
-  if (glob.pattern.length > 1) {
-    if (/^[\[?*]/.test(glob.pattern)) {
-      // only prepend the string if we don't want to match dotfiles
-      glob.pattern = (opts.dot ? dotfiles : nodot) + glob.pattern;
-    }
-  }
-
-  return glob;
-}
-
-/**
- * Collapse repeated character sequences.
- *
- * ```js
- * collapse('a/../../../b', '../');
- * //=> 'a/../b'
- * ```
- *
- * @param  {String} `str`
- * @param  {String} `ch` Character sequence to collapse
- * @return {String}
- */
-
-function collapse(str, ch) {
-  var res = str.split(ch);
-  var isFirst = res[0] === '';
-  var isLast = res[res.length - 1] === '';
-  res = res.filter(Boolean);
-  if (isFirst) res.unshift('');
-  if (isLast) res.push('');
-  return res.join(ch);
-}
-
-/**
- * Negate slashes in exclusion ranges, per glob spec:
- *
- * ```js
- * negateSlash('[^foo]');
- * //=> '[^\\/foo]'
- * ```
- *
- * @param  {String} `str` glob pattern
- * @return {String}
- */
-
-function negateSlash(str) {
-  return str.replace(/\[\^([^\]]*?)\]/g, function(match, inner) {
-    if (inner.indexOf('/') === -1) {
-      inner = '\\/' + inner;
-    }
-    return '[^' + inner + ']';
-  });
-}
-
-/**
- * Escape imbalanced braces/bracket. This is a very
- * basic, naive implementation that only does enough
- * to serve the purpose.
- */
-
-function balance(str, a, b) {
-  var aarr = str.split(a);
-  var alen = aarr.join('').length;
-  var blen = str.split(b).join('').length;
-
-  if (alen !== blen) {
-    str = aarr.join('\\' + a);
-    return str.split(b).join('\\' + b);
-  }
-  return str;
-}
-
-/**
- * Special patterns to be converted to regex.
- * Heuristics are used to simplify patterns
- * and speed up processing.
- */
-
-/* eslint no-multi-spaces: 0 */
-var qmark       = '[^/]';
-var star        = qmark + '*?';
-var nodot       = '(?!\\.)(?=.)';
-var dotfileGlob = '(?:\\/|^)\\.{1,2}($|\\/)';
-var dotfiles    = '(?!' + dotfileGlob + ')(?=.)';
-var twoStarDot  = '(?:(?!' + dotfileGlob + ').)*?';
-
-/**
- * Create a regex for `*`.
- *
- * If `dot` is true, or the pattern does not begin with
- * a leading star, then return the simpler regex.
- */
-
-function oneStar(dotfile) {
-  return dotfile ? '(?!' + dotfileGlob + ')(?=.)' + star : (nodot + star);
-}
-
-function globstar(dotfile) {
-  if (dotfile) { return twoStarDot; }
-  return '(?:(?!(?:\\/|^)\\.).)*?';
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/micromatch/lib/glob.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/micromatch/lib/glob.js ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var chars = __webpack_require__(/*! ./chars */ "./node_modules/filter-array/node_modules/micromatch/lib/chars.js");
-var utils = __webpack_require__(/*! ./utils */ "./node_modules/filter-array/node_modules/micromatch/lib/utils.js");
-
-/**
- * Expose `Glob`
- */
-
-var Glob = module.exports = function Glob(pattern, options) {
-  if (!(this instanceof Glob)) {
-    return new Glob(pattern, options);
-  }
-  this.options = options || {};
-  this.pattern = pattern;
-  this.history = [];
-  this.tokens = {};
-  this.init(pattern);
-};
-
-/**
- * Initialize defaults
- */
-
-Glob.prototype.init = function(pattern) {
-  this.orig = pattern;
-  this.negated = this.isNegated();
-  this.options.track = this.options.track || false;
-  this.options.makeRe = true;
-};
-
-/**
- * Push a change into `glob.history`. Useful
- * for debugging.
- */
-
-Glob.prototype.track = function(msg) {
-  if (this.options.track) {
-    this.history.push({msg: msg, pattern: this.pattern});
-  }
-};
-
-/**
- * Return true if `glob.pattern` was negated
- * with `!`, also remove the `!` from the pattern.
- *
- * @return {Boolean}
- */
-
-Glob.prototype.isNegated = function() {
-  if (this.pattern.charCodeAt(0) === 33 /* '!' */) {
-    this.pattern = this.pattern.slice(1);
-    return true;
-  }
-  return false;
-};
-
-/**
- * Expand braces in the given glob pattern.
- *
- * We only need to use the [braces] lib when
- * patterns are nested.
- */
-
-Glob.prototype.braces = function() {
-  if (this.options.nobraces !== true && this.options.nobrace !== true) {
-    // naive/fast check for imbalanced characters
-    var a = this.pattern.match(/[\{\(\[]/g);
-    var b = this.pattern.match(/[\}\)\]]/g);
-
-    // if imbalanced, don't optimize the pattern
-    if (a && b && (a.length !== b.length)) {
-      this.options.makeRe = false;
-    }
-
-    // expand brace patterns and join the resulting array
-    var expanded = utils.braces(this.pattern, this.options);
-    this.pattern = expanded.join('|');
-  }
-};
-
-/**
- * Expand bracket expressions in `glob.pattern`
- */
-
-Glob.prototype.brackets = function() {
-  if (this.options.nobrackets !== true) {
-    this.pattern = utils.brackets(this.pattern);
-  }
-};
-
-/**
- * Expand bracket expressions in `glob.pattern`
- */
-
-Glob.prototype.extglob = function() {
-  if (this.options.noextglob === true) return;
-
-  if (utils.isExtglob(this.pattern)) {
-    this.pattern = utils.extglob(this.pattern, {escape: true});
-  }
-};
-
-/**
- * Parse the given pattern
- */
-
-Glob.prototype.parse = function(pattern) {
-  this.tokens = utils.parseGlob(pattern || this.pattern, true);
-  return this.tokens;
-};
-
-/**
- * Replace `a` with `b`. Also tracks the change before and
- * after each replacement. This is disabled by default, but
- * can be enabled by setting `options.track` to true.
- *
- * Also, when the pattern is a string, `.split()` is used,
- * because it's much faster than replace.
- *
- * @param  {RegExp|String} `a`
- * @param  {String} `b`
- * @param  {Boolean} `escape` When `true`, escapes `*` and `?` in the replacement.
- * @return {String}
- */
-
-Glob.prototype._replace = function(a, b, escape) {
-  this.track('before (find): "' + a + '" (replace with): "' + b + '"');
-  if (escape) b = esc(b);
-  if (a && b && typeof a === 'string') {
-    this.pattern = this.pattern.split(a).join(b);
-  } else {
-    this.pattern = this.pattern.replace(a, b);
-  }
-  this.track('after');
-};
-
-/**
- * Escape special characters in the given string.
- *
- * @param  {String} `str` Glob pattern
- * @return {String}
- */
-
-Glob.prototype.escape = function(str) {
-  this.track('before escape: ');
-  var re = /["\\](['"]?[^"'\\]['"]?)/g;
-
-  this.pattern = str.replace(re, function($0, $1) {
-    var o = chars.ESC;
-    var ch = o && o[$1];
-    if (ch) {
-      return ch;
-    }
-    if (/[a-z]/i.test($0)) {
-      return $0.split('\\').join('');
-    }
-    return $0;
-  });
-
-  this.track('after escape: ');
-};
-
-/**
- * Unescape special characters in the given string.
- *
- * @param  {String} `str`
- * @return {String}
- */
-
-Glob.prototype.unescape = function(str) {
-  var re = /__([A-Z]+)_([A-Z]+)__/g;
-  this.pattern = str.replace(re, function($0, $1) {
-    return chars[$1][$0];
-  });
-  this.pattern = unesc(this.pattern);
-};
-
-/**
- * Escape/unescape utils
- */
-
-function esc(str) {
-  str = str.split('?').join('%~');
-  str = str.split('*').join('%%');
-  return str;
-}
-
-function unesc(str) {
-  str = str.split('%~').join('?');
-  str = str.split('%%').join('*');
-  return str;
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/micromatch/lib/utils.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/micromatch/lib/utils.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var win32 = process && process.platform === 'win32';
-var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
-var fileRe = __webpack_require__(/*! filename-regex */ "./node_modules/filename-regex/index.js");
-var utils = module.exports;
-
-/**
- * Module dependencies
- */
-
-utils.diff = __webpack_require__(/*! arr-diff */ "./node_modules/filter-array/node_modules/arr-diff/index.js");
-utils.unique = __webpack_require__(/*! array-unique */ "./node_modules/filter-array/node_modules/array-unique/index.js");
-utils.braces = __webpack_require__(/*! braces */ "./node_modules/filter-array/node_modules/braces/index.js");
-utils.brackets = __webpack_require__(/*! expand-brackets */ "./node_modules/filter-array/node_modules/expand-brackets/index.js");
-utils.extglob = __webpack_require__(/*! extglob */ "./node_modules/filter-array/node_modules/extglob/index.js");
-utils.isExtglob = __webpack_require__(/*! is-extglob */ "./node_modules/is-extglob/index.js");
-utils.isGlob = __webpack_require__(/*! is-glob */ "./node_modules/is-glob/index.js");
-utils.typeOf = __webpack_require__(/*! kind-of */ "./node_modules/filter-array/node_modules/micromatch/node_modules/kind-of/index.js");
-utils.normalize = __webpack_require__(/*! normalize-path */ "./node_modules/normalize-path/index.js");
-utils.omit = __webpack_require__(/*! object.omit */ "./node_modules/filter-array/node_modules/object.omit/index.js");
-utils.parseGlob = __webpack_require__(/*! parse-glob */ "./node_modules/parse-glob/index.js");
-utils.cache = __webpack_require__(/*! regex-cache */ "./node_modules/regex-cache/index.js");
-
-/**
- * Get the filename of a filepath
- *
- * @param {String} `string`
- * @return {String}
- */
-
-utils.filename = function filename(fp) {
-  var seg = fp.match(fileRe());
-  return seg && seg[0];
-};
-
-/**
- * Returns a function that returns true if the given
- * pattern is the same as a given `filepath`
- *
- * @param {String} `pattern`
- * @return {Function}
- */
-
-utils.isPath = function isPath(pattern, opts) {
-  opts = opts || {};
-  return function(fp) {
-    var unixified = utils.unixify(fp, opts);
-    if(opts.nocase){
-      return pattern.toLowerCase() === unixified.toLowerCase();
-    }
-    return pattern === unixified;
-  };
-};
-
-/**
- * Returns a function that returns true if the given
- * pattern contains a `filepath`
- *
- * @param {String} `pattern`
- * @return {Function}
- */
-
-utils.hasPath = function hasPath(pattern, opts) {
-  return function(fp) {
-    return utils.unixify(pattern, opts).indexOf(fp) !== -1;
-  };
-};
-
-/**
- * Returns a function that returns true if the given
- * pattern matches or contains a `filepath`
- *
- * @param {String} `pattern`
- * @return {Function}
- */
-
-utils.matchPath = function matchPath(pattern, opts) {
-  var fn = (opts && opts.contains)
-    ? utils.hasPath(pattern, opts)
-    : utils.isPath(pattern, opts);
-  return fn;
-};
-
-/**
- * Returns a function that returns true if the given
- * regex matches the `filename` of a file path.
- *
- * @param {RegExp} `re`
- * @return {Boolean}
- */
-
-utils.hasFilename = function hasFilename(re) {
-  return function(fp) {
-    var name = utils.filename(fp);
-    return name && re.test(name);
-  };
-};
-
-/**
- * Coerce `val` to an array
- *
- * @param  {*} val
- * @return {Array}
- */
-
-utils.arrayify = function arrayify(val) {
-  return !Array.isArray(val)
-    ? [val]
-    : val;
-};
-
-/**
- * Normalize all slashes in a file path or glob pattern to
- * forward slashes.
- */
-
-utils.unixify = function unixify(fp, opts) {
-  if (opts && opts.unixify === false) return fp;
-  if (opts && opts.unixify === true || win32 || path.sep === '\\') {
-    return utils.normalize(fp, false);
-  }
-  if (opts && opts.unescape === true) {
-    return fp ? fp.toString().replace(/\\(\w)/g, '$1') : '';
-  }
-  return fp;
-};
-
-/**
- * Escape/unescape utils
- */
-
-utils.escapePath = function escapePath(fp) {
-  return fp.replace(/[\\.]/g, '\\$&');
-};
-
-utils.unescapeGlob = function unescapeGlob(fp) {
-  return fp.replace(/[\\"']/g, '');
-};
-
-utils.escapeRe = function escapeRe(str) {
-  return str.replace(/[-[\\$*+?.#^\s{}(|)\]]/g, '\\$&');
-};
-
-/**
- * Expose `utils`
- */
-
-module.exports = utils;
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../process/browser.js */ "./node_modules/process/browser.js")))
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/micromatch/node_modules/kind-of/index.js":
-/*!*****************************************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/micromatch/node_modules/kind-of/index.js ***!
-  \*****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
-var toString = Object.prototype.toString;
-
-/**
- * Get the native `typeof` a value.
- *
- * @param  {*} `val`
- * @return {*} Native javascript type
- */
-
-module.exports = function kindOf(val) {
-  // primitivies
-  if (typeof val === 'undefined') {
-    return 'undefined';
-  }
-  if (val === null) {
-    return 'null';
-  }
-  if (val === true || val === false || val instanceof Boolean) {
-    return 'boolean';
-  }
-  if (typeof val === 'string' || val instanceof String) {
-    return 'string';
-  }
-  if (typeof val === 'number' || val instanceof Number) {
-    return 'number';
-  }
-
-  // functions
-  if (typeof val === 'function' || val instanceof Function) {
-    return 'function';
-  }
-
-  // array
-  if (typeof Array.isArray !== 'undefined' && Array.isArray(val)) {
-    return 'array';
-  }
-
-  // check for instances of RegExp and Date before calling `toString`
-  if (val instanceof RegExp) {
-    return 'regexp';
-  }
-  if (val instanceof Date) {
-    return 'date';
-  }
-
-  // other objects
-  var type = toString.call(val);
-
-  if (type === '[object RegExp]') {
-    return 'regexp';
-  }
-  if (type === '[object Date]') {
-    return 'date';
-  }
-  if (type === '[object Arguments]') {
-    return 'arguments';
-  }
-  if (type === '[object Error]') {
-    return 'error';
-  }
-
-  // buffer
-  if (isBuffer(val)) {
-    return 'buffer';
-  }
-
-  // es6: Map, WeakMap, Set, WeakSet
-  if (type === '[object Set]') {
-    return 'set';
-  }
-  if (type === '[object WeakSet]') {
-    return 'weakset';
-  }
-  if (type === '[object Map]') {
-    return 'map';
-  }
-  if (type === '[object WeakMap]') {
-    return 'weakmap';
-  }
-  if (type === '[object Symbol]') {
-    return 'symbol';
-  }
-
-  // typed arrays
-  if (type === '[object Int8Array]') {
-    return 'int8array';
-  }
-  if (type === '[object Uint8Array]') {
-    return 'uint8array';
-  }
-  if (type === '[object Uint8ClampedArray]') {
-    return 'uint8clampedarray';
-  }
-  if (type === '[object Int16Array]') {
-    return 'int16array';
-  }
-  if (type === '[object Uint16Array]') {
-    return 'uint16array';
-  }
-  if (type === '[object Int32Array]') {
-    return 'int32array';
-  }
-  if (type === '[object Uint32Array]') {
-    return 'uint32array';
-  }
-  if (type === '[object Float32Array]') {
-    return 'float32array';
-  }
-  if (type === '[object Float64Array]') {
-    return 'float64array';
-  }
-
-  // must be a plain object
-  return 'object';
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/filter-array/node_modules/object.omit/index.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/filter-array/node_modules/object.omit/index.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * object.omit <https://github.com/jonschlinkert/object.omit>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-var isObject = __webpack_require__(/*! is-extendable */ "./node_modules/is-extendable/index.js");
-var forOwn = __webpack_require__(/*! for-own */ "./node_modules/for-own/index.js");
-
-module.exports = function omit(obj, keys) {
-  if (!isObject(obj)) return {};
-
-  keys = [].concat.apply([], [].slice.call(arguments, 1));
-  var last = keys[keys.length - 1];
-  var res = {}, fn;
-
-  if (typeof last === 'function') {
-    fn = keys.pop();
-  }
-
-  var isFunction = typeof fn === 'function';
-  if (!keys.length && !isFunction) {
-    return obj;
-  }
-
-  forOwn(obj, function(value, key) {
-    if (keys.indexOf(key) === -1) {
-
-      if (!isFunction) {
-        res[key] = value;
-      } else if (fn(value, key, obj)) {
-        res[key] = value;
-      }
-    }
-  });
-  return res;
 };
 
 
@@ -12093,7 +10560,7 @@ module.exports = function forOwn(obj, fn, thisArg) {
 
 
 var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
-var parent = __webpack_require__(/*! glob-parent */ "./node_modules/glob-base/node_modules/glob-parent/index.js");
+var parent = __webpack_require__(/*! glob-parent */ "./node_modules/glob-parent/index.js");
 var isGlob = __webpack_require__(/*! is-glob */ "./node_modules/is-glob/index.js");
 
 module.exports = function globBase(pattern) {
@@ -12138,10 +10605,10 @@ function dirname(glob) {
 
 /***/ }),
 
-/***/ "./node_modules/glob-base/node_modules/glob-parent/index.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/glob-base/node_modules/glob-parent/index.js ***!
-  \******************************************************************/
+/***/ "./node_modules/glob-parent/index.js":
+/*!*******************************************!*\
+  !*** ./node_modules/glob-parent/index.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12462,6 +10929,164 @@ module.exports = function isGlob(str) {
 
 /***/ }),
 
+/***/ "./node_modules/is-number/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/is-number/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * is-number <https://github.com/jonschlinkert/is-number>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+
+
+var typeOf = __webpack_require__(/*! kind-of */ "./node_modules/is-number/node_modules/kind-of/index.js");
+
+module.exports = function isNumber(num) {
+  var type = typeOf(num);
+  if (type !== 'number' && type !== 'string') {
+    return false;
+  }
+  var n = +num;
+  return (n - n + 1) >= 0 && num !== '';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/is-number/node_modules/kind-of/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/is-number/node_modules/kind-of/index.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+var toString = Object.prototype.toString;
+
+/**
+ * Get the native `typeof` a value.
+ *
+ * @param  {*} `val`
+ * @return {*} Native javascript type
+ */
+
+module.exports = function kindOf(val) {
+  // primitivies
+  if (typeof val === 'undefined') {
+    return 'undefined';
+  }
+  if (val === null) {
+    return 'null';
+  }
+  if (val === true || val === false || val instanceof Boolean) {
+    return 'boolean';
+  }
+  if (typeof val === 'string' || val instanceof String) {
+    return 'string';
+  }
+  if (typeof val === 'number' || val instanceof Number) {
+    return 'number';
+  }
+
+  // functions
+  if (typeof val === 'function' || val instanceof Function) {
+    return 'function';
+  }
+
+  // array
+  if (typeof Array.isArray !== 'undefined' && Array.isArray(val)) {
+    return 'array';
+  }
+
+  // check for instances of RegExp and Date before calling `toString`
+  if (val instanceof RegExp) {
+    return 'regexp';
+  }
+  if (val instanceof Date) {
+    return 'date';
+  }
+
+  // other objects
+  var type = toString.call(val);
+
+  if (type === '[object RegExp]') {
+    return 'regexp';
+  }
+  if (type === '[object Date]') {
+    return 'date';
+  }
+  if (type === '[object Arguments]') {
+    return 'arguments';
+  }
+  if (type === '[object Error]') {
+    return 'error';
+  }
+
+  // buffer
+  if (isBuffer(val)) {
+    return 'buffer';
+  }
+
+  // es6: Map, WeakMap, Set, WeakSet
+  if (type === '[object Set]') {
+    return 'set';
+  }
+  if (type === '[object WeakSet]') {
+    return 'weakset';
+  }
+  if (type === '[object Map]') {
+    return 'map';
+  }
+  if (type === '[object WeakMap]') {
+    return 'weakmap';
+  }
+  if (type === '[object Symbol]') {
+    return 'symbol';
+  }
+
+  // typed arrays
+  if (type === '[object Int8Array]') {
+    return 'int8array';
+  }
+  if (type === '[object Uint8Array]') {
+    return 'uint8array';
+  }
+  if (type === '[object Uint8ClampedArray]') {
+    return 'uint8clampedarray';
+  }
+  if (type === '[object Int16Array]') {
+    return 'int16array';
+  }
+  if (type === '[object Uint16Array]') {
+    return 'uint16array';
+  }
+  if (type === '[object Int32Array]') {
+    return 'int32array';
+  }
+  if (type === '[object Uint32Array]') {
+    return 'uint32array';
+  }
+  if (type === '[object Float32Array]') {
+    return 'float32array';
+  }
+  if (type === '[object Float64Array]') {
+    return 'float64array';
+  }
+
+  // must be a plain object
+  return 'object';
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/is-posix-bracket/index.js":
 /*!************************************************!*\
   !*** ./node_modules/is-posix-bracket/index.js ***!
@@ -12519,6 +11144,32 @@ var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/isobject/index.js":
+/*!****************************************!*\
+  !*** ./node_modules/isobject/index.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * isobject <https://github.com/jonschlinkert/isobject>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+
+
+var isArray = __webpack_require__(/*! isarray */ "./node_modules/isarray/index.js");
+
+module.exports = function isObject(val) {
+  return val != null && typeof val === 'object' && isArray(val) === false;
 };
 
 
@@ -23131,8 +21782,7 @@ return jQuery;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
-var toString = Object.prototype.toString;
+/* WEBPACK VAR INJECTION */(function(Buffer) {var toString = Object.prototype.toString;
 
 /**
  * Get the native `typeof` a value.
@@ -23142,8 +21792,7 @@ var toString = Object.prototype.toString;
  */
 
 module.exports = function kindOf(val) {
-  // primitivies
-  if (typeof val === 'undefined') {
+  if (val === undefined) {
     return 'undefined';
   }
   if (val === null) {
@@ -23152,102 +21801,34 @@ module.exports = function kindOf(val) {
   if (val === true || val === false || val instanceof Boolean) {
     return 'boolean';
   }
-  if (typeof val === 'string' || val instanceof String) {
-    return 'string';
+  if (typeof val !== 'object') {
+    return typeof val;
   }
-  if (typeof val === 'number' || val instanceof Number) {
-    return 'number';
-  }
-
-  // functions
-  if (typeof val === 'function' || val instanceof Function) {
-    return 'function';
-  }
-
-  // array
-  if (typeof Array.isArray !== 'undefined' && Array.isArray(val)) {
+  if (Array.isArray(val)) {
     return 'array';
   }
 
-  // check for instances of RegExp and Date before calling `toString`
-  if (val instanceof RegExp) {
-    return 'regexp';
-  }
-  if (val instanceof Date) {
-    return 'date';
-  }
-
-  // other objects
   var type = toString.call(val);
 
-  if (type === '[object RegExp]') {
+  if (val instanceof RegExp || type === '[object RegExp]') {
     return 'regexp';
   }
-  if (type === '[object Date]') {
+  if (val instanceof Date || type === '[object Date]') {
     return 'date';
+  }
+  if (type === '[object Function]') {
+    return 'function';
   }
   if (type === '[object Arguments]') {
     return 'arguments';
   }
-  if (type === '[object Error]') {
-    return 'error';
-  }
-
-  // buffer
-  if (isBuffer(val)) {
+  if (typeof Buffer !== 'undefined' && Buffer.isBuffer(val)) {
     return 'buffer';
   }
-
-  // es6: Map, WeakMap, Set, WeakSet
-  if (type === '[object Set]') {
-    return 'set';
-  }
-  if (type === '[object WeakSet]') {
-    return 'weakset';
-  }
-  if (type === '[object Map]') {
-    return 'map';
-  }
-  if (type === '[object WeakMap]') {
-    return 'weakmap';
-  }
-  if (type === '[object Symbol]') {
-    return 'symbol';
-  }
-
-  // typed arrays
-  if (type === '[object Int8Array]') {
-    return 'int8array';
-  }
-  if (type === '[object Uint8Array]') {
-    return 'uint8array';
-  }
-  if (type === '[object Uint8ClampedArray]') {
-    return 'uint8clampedarray';
-  }
-  if (type === '[object Int16Array]') {
-    return 'int16array';
-  }
-  if (type === '[object Uint16Array]') {
-    return 'uint16array';
-  }
-  if (type === '[object Int32Array]') {
-    return 'int32array';
-  }
-  if (type === '[object Uint32Array]') {
-    return 'uint32array';
-  }
-  if (type === '[object Float32Array]') {
-    return 'float32array';
-  }
-  if (type === '[object Float64Array]') {
-    return 'float64array';
-  }
-
-  // must be a plain object
-  return 'object';
+  return type.slice(8, -1).toLowerCase();
 };
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
@@ -40690,6 +39271,1338 @@ module.exports = (function (global) {
 
 /***/ }),
 
+/***/ "./node_modules/micromatch/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/micromatch/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * micromatch <https://github.com/jonschlinkert/micromatch>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+
+
+var expand = __webpack_require__(/*! ./lib/expand */ "./node_modules/micromatch/lib/expand.js");
+var utils = __webpack_require__(/*! ./lib/utils */ "./node_modules/micromatch/lib/utils.js");
+
+/**
+ * The main function. Pass an array of filepaths,
+ * and a string or array of glob patterns
+ *
+ * @param  {Array|String} `files`
+ * @param  {Array|String} `patterns`
+ * @param  {Object} `opts`
+ * @return {Array} Array of matches
+ */
+
+function micromatch(files, patterns, opts) {
+  if (!files || !patterns) return [];
+  opts = opts || {};
+
+  if (typeof opts.cache === 'undefined') {
+    opts.cache = true;
+  }
+
+  if (!Array.isArray(patterns)) {
+    return match(files, patterns, opts);
+  }
+
+  var len = patterns.length, i = 0;
+  var omit = [], keep = [];
+
+  while (len--) {
+    var glob = patterns[i++];
+    if (typeof glob === 'string' && glob.charCodeAt(0) === 33 /* ! */) {
+      omit.push.apply(omit, match(files, glob.slice(1), opts));
+    } else {
+      keep.push.apply(keep, match(files, glob, opts));
+    }
+  }
+  return utils.diff(keep, omit);
+}
+
+/**
+ * Return an array of files that match the given glob pattern.
+ *
+ * This function is called by the main `micromatch` function If you only
+ * need to pass a single pattern you might get very minor speed improvements
+ * using this function.
+ *
+ * @param  {Array} `files`
+ * @param  {String} `pattern`
+ * @param  {Object} `options`
+ * @return {Array}
+ */
+
+function match(files, pattern, opts) {
+  if (utils.typeOf(files) !== 'string' && !Array.isArray(files)) {
+    throw new Error(msg('match', 'files', 'a string or array'));
+  }
+
+  files = utils.arrayify(files);
+  opts = opts || {};
+
+  var negate = opts.negate || false;
+  var orig = pattern;
+
+  if (typeof pattern === 'string') {
+    negate = pattern.charAt(0) === '!';
+    if (negate) {
+      pattern = pattern.slice(1);
+    }
+
+    // we need to remove the character regardless,
+    // so the above logic is still needed
+    if (opts.nonegate === true) {
+      negate = false;
+    }
+  }
+
+  var _isMatch = matcher(pattern, opts);
+  var len = files.length, i = 0;
+  var res = [];
+
+  while (i < len) {
+    var file = files[i++];
+    var fp = utils.unixify(file, opts);
+
+    if (!_isMatch(fp)) { continue; }
+    res.push(fp);
+  }
+
+  if (res.length === 0) {
+    if (opts.failglob === true) {
+      throw new Error('micromatch.match() found no matches for: "' + orig + '".');
+    }
+
+    if (opts.nonull || opts.nullglob) {
+      res.push(utils.unescapeGlob(orig));
+    }
+  }
+
+  // if `negate` was defined, diff negated files
+  if (negate) { res = utils.diff(files, res); }
+
+  // if `ignore` was defined, diff ignored filed
+  if (opts.ignore && opts.ignore.length) {
+    pattern = opts.ignore;
+    opts = utils.omit(opts, ['ignore']);
+    res = utils.diff(res, micromatch(res, pattern, opts));
+  }
+
+  if (opts.nodupes) {
+    return utils.unique(res);
+  }
+  return res;
+}
+
+/**
+ * Returns a function that takes a glob pattern or array of glob patterns
+ * to be used with `Array#filter()`. (Internally this function generates
+ * the matching function using the [matcher] method).
+ *
+ * ```js
+ * var fn = mm.filter('[a-c]');
+ * ['a', 'b', 'c', 'd', 'e'].filter(fn);
+ * //=> ['a', 'b', 'c']
+ * ```
+ * @param  {String|Array} `patterns` Can be a glob or array of globs.
+ * @param  {Options} `opts` Options to pass to the [matcher] method.
+ * @return {Function} Filter function to be passed to `Array#filter()`.
+ */
+
+function filter(patterns, opts) {
+  if (!Array.isArray(patterns) && typeof patterns !== 'string') {
+    throw new TypeError(msg('filter', 'patterns', 'a string or array'));
+  }
+
+  patterns = utils.arrayify(patterns);
+  var len = patterns.length, i = 0;
+  var patternMatchers = Array(len);
+  while (i < len) {
+    patternMatchers[i] = matcher(patterns[i++], opts);
+  }
+
+  return function(fp) {
+    if (fp == null) return [];
+    var len = patternMatchers.length, i = 0;
+    var res = true;
+
+    fp = utils.unixify(fp, opts);
+    while (i < len) {
+      var fn = patternMatchers[i++];
+      if (!fn(fp)) {
+        res = false;
+        break;
+      }
+    }
+    return res;
+  };
+}
+
+/**
+ * Returns true if the filepath contains the given
+ * pattern. Can also return a function for matching.
+ *
+ * ```js
+ * isMatch('foo.md', '*.md', {});
+ * //=> true
+ *
+ * isMatch('*.md', {})('foo.md')
+ * //=> true
+ * ```
+ * @param  {String} `fp`
+ * @param  {String} `pattern`
+ * @param  {Object} `opts`
+ * @return {Boolean}
+ */
+
+function isMatch(fp, pattern, opts) {
+  if (typeof fp !== 'string') {
+    throw new TypeError(msg('isMatch', 'filepath', 'a string'));
+  }
+
+  fp = utils.unixify(fp, opts);
+  if (utils.typeOf(pattern) === 'object') {
+    return matcher(fp, pattern);
+  }
+  return matcher(pattern, opts)(fp);
+}
+
+/**
+ * Returns true if the filepath matches the
+ * given pattern.
+ */
+
+function contains(fp, pattern, opts) {
+  if (typeof fp !== 'string') {
+    throw new TypeError(msg('contains', 'pattern', 'a string'));
+  }
+
+  opts = opts || {};
+  opts.contains = (pattern !== '');
+  fp = utils.unixify(fp, opts);
+
+  if (opts.contains && !utils.isGlob(pattern)) {
+    return fp.indexOf(pattern) !== -1;
+  }
+  return matcher(pattern, opts)(fp);
+}
+
+/**
+ * Returns true if a file path matches any of the
+ * given patterns.
+ *
+ * @param  {String} `fp` The filepath to test.
+ * @param  {String|Array} `patterns` Glob patterns to use.
+ * @param  {Object} `opts` Options to pass to the `matcher()` function.
+ * @return {String}
+ */
+
+function any(fp, patterns, opts) {
+  if (!Array.isArray(patterns) && typeof patterns !== 'string') {
+    throw new TypeError(msg('any', 'patterns', 'a string or array'));
+  }
+
+  patterns = utils.arrayify(patterns);
+  var len = patterns.length;
+
+  fp = utils.unixify(fp, opts);
+  while (len--) {
+    var isMatch = matcher(patterns[len], opts);
+    if (isMatch(fp)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Filter the keys of an object with the given `glob` pattern
+ * and `options`
+ *
+ * @param  {Object} `object`
+ * @param  {Pattern} `object`
+ * @return {Array}
+ */
+
+function matchKeys(obj, glob, options) {
+  if (utils.typeOf(obj) !== 'object') {
+    throw new TypeError(msg('matchKeys', 'first argument', 'an object'));
+  }
+
+  var fn = matcher(glob, options);
+  var res = {};
+
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key) && fn(key)) {
+      res[key] = obj[key];
+    }
+  }
+  return res;
+}
+
+/**
+ * Return a function for matching based on the
+ * given `pattern` and `options`.
+ *
+ * @param  {String} `pattern`
+ * @param  {Object} `options`
+ * @return {Function}
+ */
+
+function matcher(pattern, opts) {
+  // pattern is a function
+  if (typeof pattern === 'function') {
+    return pattern;
+  }
+  // pattern is a regex
+  if (pattern instanceof RegExp) {
+    return function(fp) {
+      return pattern.test(fp);
+    };
+  }
+
+  if (typeof pattern !== 'string') {
+    throw new TypeError(msg('matcher', 'pattern', 'a string, regex, or function'));
+  }
+
+  // strings, all the way down...
+  pattern = utils.unixify(pattern, opts);
+
+  // pattern is a non-glob string
+  if (!utils.isGlob(pattern)) {
+    return utils.matchPath(pattern, opts);
+  }
+  // pattern is a glob string
+  var re = makeRe(pattern, opts);
+
+  // `matchBase` is defined
+  if (opts && opts.matchBase) {
+    return utils.hasFilename(re, opts);
+  }
+  // `matchBase` is not defined
+  return function(fp) {
+    fp = utils.unixify(fp, opts);
+    return re.test(fp);
+  };
+}
+
+/**
+ * Create and cache a regular expression for matching
+ * file paths.
+ *
+ * If the leading character in the `glob` is `!`, a negation
+ * regex is returned.
+ *
+ * @param  {String} `glob`
+ * @param  {Object} `options`
+ * @return {RegExp}
+ */
+
+function toRegex(glob, options) {
+  // clone options to prevent  mutating the original object
+  var opts = Object.create(options || {});
+  var flags = opts.flags || '';
+  if (opts.nocase && flags.indexOf('i') === -1) {
+    flags += 'i';
+  }
+
+  var parsed = expand(glob, opts);
+
+  // pass in tokens to avoid parsing more than once
+  opts.negated = opts.negated || parsed.negated;
+  opts.negate = opts.negated;
+  glob = wrapGlob(parsed.pattern, opts);
+  var re;
+
+  try {
+    re = new RegExp(glob, flags);
+    return re;
+  } catch (err) {
+    err.reason = 'micromatch invalid regex: (' + re + ')';
+    if (opts.strict) throw new SyntaxError(err);
+  }
+
+  // we're only here if a bad pattern was used and the user
+  // passed `options.silent`, so match nothing
+  return /$^/;
+}
+
+/**
+ * Create the regex to do the matching. If the leading
+ * character in the `glob` is `!` a negation regex is returned.
+ *
+ * @param {String} `glob`
+ * @param {Boolean} `negate`
+ */
+
+function wrapGlob(glob, opts) {
+  var prefix = (opts && !opts.contains) ? '^' : '';
+  var after = (opts && !opts.contains) ? '$' : '';
+  glob = ('(?:' + glob + ')' + after);
+  if (opts && opts.negate) {
+    return prefix + ('(?!^' + glob + ').*$');
+  }
+  return prefix + glob;
+}
+
+/**
+ * Create and cache a regular expression for matching file paths.
+ * If the leading character in the `glob` is `!`, a negation
+ * regex is returned.
+ *
+ * @param  {String} `glob`
+ * @param  {Object} `options`
+ * @return {RegExp}
+ */
+
+function makeRe(glob, opts) {
+  if (utils.typeOf(glob) !== 'string') {
+    throw new Error(msg('makeRe', 'glob', 'a string'));
+  }
+  return utils.cache(toRegex, glob, opts);
+}
+
+/**
+ * Make error messages consistent. Follows this format:
+ *
+ * ```js
+ * msg(methodName, argNumber, nativeType);
+ * // example:
+ * msg('matchKeys', 'first', 'an object');
+ * ```
+ *
+ * @param  {String} `method`
+ * @param  {String} `num`
+ * @param  {String} `type`
+ * @return {String}
+ */
+
+function msg(method, what, type) {
+  return 'micromatch.' + method + '(): ' + what + ' should be ' + type + '.';
+}
+
+/**
+ * Public methods
+ */
+
+/* eslint no-multi-spaces: 0 */
+micromatch.any       = any;
+micromatch.braces    = micromatch.braceExpand = utils.braces;
+micromatch.contains  = contains;
+micromatch.expand    = expand;
+micromatch.filter    = filter;
+micromatch.isMatch   = isMatch;
+micromatch.makeRe    = makeRe;
+micromatch.match     = match;
+micromatch.matcher   = matcher;
+micromatch.matchKeys = matchKeys;
+
+/**
+ * Expose `micromatch`
+ */
+
+module.exports = micromatch;
+
+
+/***/ }),
+
+/***/ "./node_modules/micromatch/lib/chars.js":
+/*!**********************************************!*\
+  !*** ./node_modules/micromatch/lib/chars.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var chars = {}, unesc, temp;
+
+function reverse(object, prepender) {
+  return Object.keys(object).reduce(function(reversed, key) {
+    var newKey = prepender ? prepender + key : key; // Optionally prepend a string to key.
+    reversed[object[key]] = newKey; // Swap key and value.
+    return reversed; // Return the result.
+  }, {});
+}
+
+/**
+ * Regex for common characters
+ */
+
+chars.escapeRegex = {
+  '?': /\?/g,
+  '@': /\@/g,
+  '!': /\!/g,
+  '+': /\+/g,
+  '*': /\*/g,
+  '(': /\(/g,
+  ')': /\)/g,
+  '[': /\[/g,
+  ']': /\]/g
+};
+
+/**
+ * Escape characters
+ */
+
+chars.ESC = {
+  '?': '__UNESC_QMRK__',
+  '@': '__UNESC_AMPE__',
+  '!': '__UNESC_EXCL__',
+  '+': '__UNESC_PLUS__',
+  '*': '__UNESC_STAR__',
+  ',': '__UNESC_COMMA__',
+  '(': '__UNESC_LTPAREN__',
+  ')': '__UNESC_RTPAREN__',
+  '[': '__UNESC_LTBRACK__',
+  ']': '__UNESC_RTBRACK__'
+};
+
+/**
+ * Unescape characters
+ */
+
+chars.UNESC = unesc || (unesc = reverse(chars.ESC, '\\'));
+
+chars.ESC_TEMP = {
+  '?': '__TEMP_QMRK__',
+  '@': '__TEMP_AMPE__',
+  '!': '__TEMP_EXCL__',
+  '*': '__TEMP_STAR__',
+  '+': '__TEMP_PLUS__',
+  ',': '__TEMP_COMMA__',
+  '(': '__TEMP_LTPAREN__',
+  ')': '__TEMP_RTPAREN__',
+  '[': '__TEMP_LTBRACK__',
+  ']': '__TEMP_RTBRACK__'
+};
+
+chars.TEMP = temp || (temp = reverse(chars.ESC_TEMP));
+
+module.exports = chars;
+
+
+/***/ }),
+
+/***/ "./node_modules/micromatch/lib/expand.js":
+/*!***********************************************!*\
+  !*** ./node_modules/micromatch/lib/expand.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * micromatch <https://github.com/jonschlinkert/micromatch>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+
+
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/micromatch/lib/utils.js");
+var Glob = __webpack_require__(/*! ./glob */ "./node_modules/micromatch/lib/glob.js");
+
+/**
+ * Expose `expand`
+ */
+
+module.exports = expand;
+
+/**
+ * Expand a glob pattern to resolve braces and
+ * similar patterns before converting to regex.
+ *
+ * @param  {String|Array} `pattern`
+ * @param  {Array} `files`
+ * @param  {Options} `opts`
+ * @return {Array}
+ */
+
+function expand(pattern, options) {
+  if (typeof pattern !== 'string') {
+    throw new TypeError('micromatch.expand(): argument should be a string.');
+  }
+
+  var glob = new Glob(pattern, options || {});
+  var opts = glob.options;
+
+  if (!utils.isGlob(pattern)) {
+    glob.pattern = glob.pattern.replace(/([\/.])/g, '\\$1');
+    return glob;
+  }
+
+  glob.pattern = glob.pattern.replace(/(\+)(?!\()/g, '\\$1');
+  glob.pattern = glob.pattern.split('$').join('\\$');
+
+  if (typeof opts.braces !== 'boolean' && typeof opts.nobraces !== 'boolean') {
+    opts.braces = true;
+  }
+
+  if (glob.pattern === '.*') {
+    return {
+      pattern: '\\.' + star,
+      tokens: tok,
+      options: opts
+    };
+  }
+
+  if (glob.pattern === '*') {
+    return {
+      pattern: oneStar(opts.dot),
+      tokens: tok,
+      options: opts
+    };
+  }
+
+  // parse the glob pattern into tokens
+  glob.parse();
+  var tok = glob.tokens;
+  tok.is.negated = opts.negated;
+
+  // dotfile handling
+  if ((opts.dotfiles === true || tok.is.dotfile) && opts.dot !== false) {
+    opts.dotfiles = true;
+    opts.dot = true;
+  }
+
+  if ((opts.dotdirs === true || tok.is.dotdir) && opts.dot !== false) {
+    opts.dotdirs = true;
+    opts.dot = true;
+  }
+
+  // check for braces with a dotfile pattern
+  if (/[{,]\./.test(glob.pattern)) {
+    opts.makeRe = false;
+    opts.dot = true;
+  }
+
+  if (opts.nonegate !== true) {
+    opts.negated = glob.negated;
+  }
+
+  // if the leading character is a dot or a slash, escape it
+  if (glob.pattern.charAt(0) === '.' && glob.pattern.charAt(1) !== '/') {
+    glob.pattern = '\\' + glob.pattern;
+  }
+
+  /**
+   * Extended globs
+   */
+
+  // expand braces, e.g `{1..5}`
+  glob.track('before braces');
+  if (tok.is.braces) {
+    glob.braces();
+  }
+  glob.track('after braces');
+
+  // expand extglobs, e.g `foo/!(a|b)`
+  glob.track('before extglob');
+  if (tok.is.extglob) {
+    glob.extglob();
+  }
+  glob.track('after extglob');
+
+  // expand brackets, e.g `[[:alpha:]]`
+  glob.track('before brackets');
+  if (tok.is.brackets) {
+    glob.brackets();
+  }
+  glob.track('after brackets');
+
+  // special patterns
+  glob._replace('[!', '[^');
+  glob._replace('(?', '(%~');
+  glob._replace(/\[\]/, '\\[\\]');
+  glob._replace('/[', '/' + (opts.dot ? dotfiles : nodot) + '[', true);
+  glob._replace('/?', '/' + (opts.dot ? dotfiles : nodot) + '[^/]', true);
+  glob._replace('/.', '/(?=.)\\.', true);
+
+  // windows drives
+  glob._replace(/^(\w):([\\\/]+?)/gi, '(?=.)$1:$2', true);
+
+  // negate slashes in exclusion ranges
+  if (glob.pattern.indexOf('[^') !== -1) {
+    glob.pattern = negateSlash(glob.pattern);
+  }
+
+  if (opts.globstar !== false && glob.pattern === '**') {
+    glob.pattern = globstar(opts.dot);
+
+  } else {
+    glob.pattern = balance(glob.pattern, '[', ']');
+    glob.escape(glob.pattern);
+
+    // if the pattern has `**`
+    if (tok.is.globstar) {
+      glob.pattern = collapse(glob.pattern, '/**');
+      glob.pattern = collapse(glob.pattern, '**/');
+      glob._replace('/**/', '(?:/' + globstar(opts.dot) + '/|/)', true);
+      glob._replace(/\*{2,}/g, '**');
+
+      // 'foo/*'
+      glob._replace(/(\w+)\*(?!\/)/g, '$1[^/]*?', true);
+      glob._replace(/\*\*\/\*(\w)/g, globstar(opts.dot) + '\\/' + (opts.dot ? dotfiles : nodot) + '[^/]*?$1', true);
+
+      if (opts.dot !== true) {
+        glob._replace(/\*\*\/(.)/g, '(?:**\\/|)$1');
+      }
+
+      // 'foo/**' or '{**,*}', but not 'foo**'
+      if (tok.path.dirname !== '' || /,\*\*|\*\*,/.test(glob.orig)) {
+        glob._replace('**', globstar(opts.dot), true);
+      }
+    }
+
+    // ends with /*
+    glob._replace(/\/\*$/, '\\/' + oneStar(opts.dot), true);
+    // ends with *, no slashes
+    glob._replace(/(?!\/)\*$/, star, true);
+    // has 'n*.' (partial wildcard w/ file extension)
+    glob._replace(/([^\/]+)\*/, '$1' + oneStar(true), true);
+    // has '*'
+    glob._replace('*', oneStar(opts.dot), true);
+    glob._replace('?.', '?\\.', true);
+    glob._replace('?:', '?:', true);
+
+    glob._replace(/\?+/g, function(match) {
+      var len = match.length;
+      if (len === 1) {
+        return qmark;
+      }
+      return qmark + '{' + len + '}';
+    });
+
+    // escape '.abc' => '\\.abc'
+    glob._replace(/\.([*\w]+)/g, '\\.$1');
+    // fix '[^\\\\/]'
+    glob._replace(/\[\^[\\\/]+\]/g, qmark);
+    // '///' => '\/'
+    glob._replace(/\/+/g, '\\/');
+    // '\\\\\\' => '\\'
+    glob._replace(/\\{2,}/g, '\\');
+  }
+
+  // unescape previously escaped patterns
+  glob.unescape(glob.pattern);
+  glob._replace('__UNESC_STAR__', '*');
+
+  // escape dots that follow qmarks
+  glob._replace('?.', '?\\.');
+
+  // remove unnecessary slashes in character classes
+  glob._replace('[^\\/]', qmark);
+
+  if (glob.pattern.length > 1) {
+    if (/^[\[?*]/.test(glob.pattern)) {
+      // only prepend the string if we don't want to match dotfiles
+      glob.pattern = (opts.dot ? dotfiles : nodot) + glob.pattern;
+    }
+  }
+
+  return glob;
+}
+
+/**
+ * Collapse repeated character sequences.
+ *
+ * ```js
+ * collapse('a/../../../b', '../');
+ * //=> 'a/../b'
+ * ```
+ *
+ * @param  {String} `str`
+ * @param  {String} `ch` Character sequence to collapse
+ * @return {String}
+ */
+
+function collapse(str, ch) {
+  var res = str.split(ch);
+  var isFirst = res[0] === '';
+  var isLast = res[res.length - 1] === '';
+  res = res.filter(Boolean);
+  if (isFirst) res.unshift('');
+  if (isLast) res.push('');
+  return res.join(ch);
+}
+
+/**
+ * Negate slashes in exclusion ranges, per glob spec:
+ *
+ * ```js
+ * negateSlash('[^foo]');
+ * //=> '[^\\/foo]'
+ * ```
+ *
+ * @param  {String} `str` glob pattern
+ * @return {String}
+ */
+
+function negateSlash(str) {
+  return str.replace(/\[\^([^\]]*?)\]/g, function(match, inner) {
+    if (inner.indexOf('/') === -1) {
+      inner = '\\/' + inner;
+    }
+    return '[^' + inner + ']';
+  });
+}
+
+/**
+ * Escape imbalanced braces/bracket. This is a very
+ * basic, naive implementation that only does enough
+ * to serve the purpose.
+ */
+
+function balance(str, a, b) {
+  var aarr = str.split(a);
+  var alen = aarr.join('').length;
+  var blen = str.split(b).join('').length;
+
+  if (alen !== blen) {
+    str = aarr.join('\\' + a);
+    return str.split(b).join('\\' + b);
+  }
+  return str;
+}
+
+/**
+ * Special patterns to be converted to regex.
+ * Heuristics are used to simplify patterns
+ * and speed up processing.
+ */
+
+/* eslint no-multi-spaces: 0 */
+var qmark       = '[^/]';
+var star        = qmark + '*?';
+var nodot       = '(?!\\.)(?=.)';
+var dotfileGlob = '(?:\\/|^)\\.{1,2}($|\\/)';
+var dotfiles    = '(?!' + dotfileGlob + ')(?=.)';
+var twoStarDot  = '(?:(?!' + dotfileGlob + ').)*?';
+
+/**
+ * Create a regex for `*`.
+ *
+ * If `dot` is true, or the pattern does not begin with
+ * a leading star, then return the simpler regex.
+ */
+
+function oneStar(dotfile) {
+  return dotfile ? '(?!' + dotfileGlob + ')(?=.)' + star : (nodot + star);
+}
+
+function globstar(dotfile) {
+  if (dotfile) { return twoStarDot; }
+  return '(?:(?!(?:\\/|^)\\.).)*?';
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/micromatch/lib/glob.js":
+/*!*********************************************!*\
+  !*** ./node_modules/micromatch/lib/glob.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var chars = __webpack_require__(/*! ./chars */ "./node_modules/micromatch/lib/chars.js");
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/micromatch/lib/utils.js");
+
+/**
+ * Expose `Glob`
+ */
+
+var Glob = module.exports = function Glob(pattern, options) {
+  if (!(this instanceof Glob)) {
+    return new Glob(pattern, options);
+  }
+  this.options = options || {};
+  this.pattern = pattern;
+  this.history = [];
+  this.tokens = {};
+  this.init(pattern);
+};
+
+/**
+ * Initialize defaults
+ */
+
+Glob.prototype.init = function(pattern) {
+  this.orig = pattern;
+  this.negated = this.isNegated();
+  this.options.track = this.options.track || false;
+  this.options.makeRe = true;
+};
+
+/**
+ * Push a change into `glob.history`. Useful
+ * for debugging.
+ */
+
+Glob.prototype.track = function(msg) {
+  if (this.options.track) {
+    this.history.push({msg: msg, pattern: this.pattern});
+  }
+};
+
+/**
+ * Return true if `glob.pattern` was negated
+ * with `!`, also remove the `!` from the pattern.
+ *
+ * @return {Boolean}
+ */
+
+Glob.prototype.isNegated = function() {
+  if (this.pattern.charCodeAt(0) === 33 /* '!' */) {
+    this.pattern = this.pattern.slice(1);
+    return true;
+  }
+  return false;
+};
+
+/**
+ * Expand braces in the given glob pattern.
+ *
+ * We only need to use the [braces] lib when
+ * patterns are nested.
+ */
+
+Glob.prototype.braces = function() {
+  if (this.options.nobraces !== true && this.options.nobrace !== true) {
+    // naive/fast check for imbalanced characters
+    var a = this.pattern.match(/[\{\(\[]/g);
+    var b = this.pattern.match(/[\}\)\]]/g);
+
+    // if imbalanced, don't optimize the pattern
+    if (a && b && (a.length !== b.length)) {
+      this.options.makeRe = false;
+    }
+
+    // expand brace patterns and join the resulting array
+    var expanded = utils.braces(this.pattern, this.options);
+    this.pattern = expanded.join('|');
+  }
+};
+
+/**
+ * Expand bracket expressions in `glob.pattern`
+ */
+
+Glob.prototype.brackets = function() {
+  if (this.options.nobrackets !== true) {
+    this.pattern = utils.brackets(this.pattern);
+  }
+};
+
+/**
+ * Expand bracket expressions in `glob.pattern`
+ */
+
+Glob.prototype.extglob = function() {
+  if (this.options.noextglob === true) return;
+
+  if (utils.isExtglob(this.pattern)) {
+    this.pattern = utils.extglob(this.pattern, {escape: true});
+  }
+};
+
+/**
+ * Parse the given pattern
+ */
+
+Glob.prototype.parse = function(pattern) {
+  this.tokens = utils.parseGlob(pattern || this.pattern, true);
+  return this.tokens;
+};
+
+/**
+ * Replace `a` with `b`. Also tracks the change before and
+ * after each replacement. This is disabled by default, but
+ * can be enabled by setting `options.track` to true.
+ *
+ * Also, when the pattern is a string, `.split()` is used,
+ * because it's much faster than replace.
+ *
+ * @param  {RegExp|String} `a`
+ * @param  {String} `b`
+ * @param  {Boolean} `escape` When `true`, escapes `*` and `?` in the replacement.
+ * @return {String}
+ */
+
+Glob.prototype._replace = function(a, b, escape) {
+  this.track('before (find): "' + a + '" (replace with): "' + b + '"');
+  if (escape) b = esc(b);
+  if (a && b && typeof a === 'string') {
+    this.pattern = this.pattern.split(a).join(b);
+  } else {
+    this.pattern = this.pattern.replace(a, b);
+  }
+  this.track('after');
+};
+
+/**
+ * Escape special characters in the given string.
+ *
+ * @param  {String} `str` Glob pattern
+ * @return {String}
+ */
+
+Glob.prototype.escape = function(str) {
+  this.track('before escape: ');
+  var re = /["\\](['"]?[^"'\\]['"]?)/g;
+
+  this.pattern = str.replace(re, function($0, $1) {
+    var o = chars.ESC;
+    var ch = o && o[$1];
+    if (ch) {
+      return ch;
+    }
+    if (/[a-z]/i.test($0)) {
+      return $0.split('\\').join('');
+    }
+    return $0;
+  });
+
+  this.track('after escape: ');
+};
+
+/**
+ * Unescape special characters in the given string.
+ *
+ * @param  {String} `str`
+ * @return {String}
+ */
+
+Glob.prototype.unescape = function(str) {
+  var re = /__([A-Z]+)_([A-Z]+)__/g;
+  this.pattern = str.replace(re, function($0, $1) {
+    return chars[$1][$0];
+  });
+  this.pattern = unesc(this.pattern);
+};
+
+/**
+ * Escape/unescape utils
+ */
+
+function esc(str) {
+  str = str.split('?').join('%~');
+  str = str.split('*').join('%%');
+  return str;
+}
+
+function unesc(str) {
+  str = str.split('%~').join('?');
+  str = str.split('%%').join('*');
+  return str;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/micromatch/lib/utils.js":
+/*!**********************************************!*\
+  !*** ./node_modules/micromatch/lib/utils.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var win32 = process && process.platform === 'win32';
+var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
+var fileRe = __webpack_require__(/*! filename-regex */ "./node_modules/filename-regex/index.js");
+var utils = module.exports;
+
+/**
+ * Module dependencies
+ */
+
+utils.diff = __webpack_require__(/*! arr-diff */ "./node_modules/arr-diff/index.js");
+utils.unique = __webpack_require__(/*! array-unique */ "./node_modules/array-unique/index.js");
+utils.braces = __webpack_require__(/*! braces */ "./node_modules/braces/index.js");
+utils.brackets = __webpack_require__(/*! expand-brackets */ "./node_modules/expand-brackets/index.js");
+utils.extglob = __webpack_require__(/*! extglob */ "./node_modules/extglob/index.js");
+utils.isExtglob = __webpack_require__(/*! is-extglob */ "./node_modules/is-extglob/index.js");
+utils.isGlob = __webpack_require__(/*! is-glob */ "./node_modules/is-glob/index.js");
+utils.typeOf = __webpack_require__(/*! kind-of */ "./node_modules/micromatch/node_modules/kind-of/index.js");
+utils.normalize = __webpack_require__(/*! normalize-path */ "./node_modules/normalize-path/index.js");
+utils.omit = __webpack_require__(/*! object.omit */ "./node_modules/object.omit/index.js");
+utils.parseGlob = __webpack_require__(/*! parse-glob */ "./node_modules/parse-glob/index.js");
+utils.cache = __webpack_require__(/*! regex-cache */ "./node_modules/regex-cache/index.js");
+
+/**
+ * Get the filename of a filepath
+ *
+ * @param {String} `string`
+ * @return {String}
+ */
+
+utils.filename = function filename(fp) {
+  var seg = fp.match(fileRe());
+  return seg && seg[0];
+};
+
+/**
+ * Returns a function that returns true if the given
+ * pattern is the same as a given `filepath`
+ *
+ * @param {String} `pattern`
+ * @return {Function}
+ */
+
+utils.isPath = function isPath(pattern, opts) {
+  opts = opts || {};
+  return function(fp) {
+    var unixified = utils.unixify(fp, opts);
+    if(opts.nocase){
+      return pattern.toLowerCase() === unixified.toLowerCase();
+    }
+    return pattern === unixified;
+  };
+};
+
+/**
+ * Returns a function that returns true if the given
+ * pattern contains a `filepath`
+ *
+ * @param {String} `pattern`
+ * @return {Function}
+ */
+
+utils.hasPath = function hasPath(pattern, opts) {
+  return function(fp) {
+    return utils.unixify(pattern, opts).indexOf(fp) !== -1;
+  };
+};
+
+/**
+ * Returns a function that returns true if the given
+ * pattern matches or contains a `filepath`
+ *
+ * @param {String} `pattern`
+ * @return {Function}
+ */
+
+utils.matchPath = function matchPath(pattern, opts) {
+  var fn = (opts && opts.contains)
+    ? utils.hasPath(pattern, opts)
+    : utils.isPath(pattern, opts);
+  return fn;
+};
+
+/**
+ * Returns a function that returns true if the given
+ * regex matches the `filename` of a file path.
+ *
+ * @param {RegExp} `re`
+ * @return {Boolean}
+ */
+
+utils.hasFilename = function hasFilename(re) {
+  return function(fp) {
+    var name = utils.filename(fp);
+    return name && re.test(name);
+  };
+};
+
+/**
+ * Coerce `val` to an array
+ *
+ * @param  {*} val
+ * @return {Array}
+ */
+
+utils.arrayify = function arrayify(val) {
+  return !Array.isArray(val)
+    ? [val]
+    : val;
+};
+
+/**
+ * Normalize all slashes in a file path or glob pattern to
+ * forward slashes.
+ */
+
+utils.unixify = function unixify(fp, opts) {
+  if (opts && opts.unixify === false) return fp;
+  if (opts && opts.unixify === true || win32 || path.sep === '\\') {
+    return utils.normalize(fp, false);
+  }
+  if (opts && opts.unescape === true) {
+    return fp ? fp.toString().replace(/\\(\w)/g, '$1') : '';
+  }
+  return fp;
+};
+
+/**
+ * Escape/unescape utils
+ */
+
+utils.escapePath = function escapePath(fp) {
+  return fp.replace(/[\\.]/g, '\\$&');
+};
+
+utils.unescapeGlob = function unescapeGlob(fp) {
+  return fp.replace(/[\\"']/g, '');
+};
+
+utils.escapeRe = function escapeRe(str) {
+  return str.replace(/[-[\\$*+?.#^\s{}(|)\]]/g, '\\$&');
+};
+
+/**
+ * Expose `utils`
+ */
+
+module.exports = utils;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/micromatch/node_modules/kind-of/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/micromatch/node_modules/kind-of/index.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+var toString = Object.prototype.toString;
+
+/**
+ * Get the native `typeof` a value.
+ *
+ * @param  {*} `val`
+ * @return {*} Native javascript type
+ */
+
+module.exports = function kindOf(val) {
+  // primitivies
+  if (typeof val === 'undefined') {
+    return 'undefined';
+  }
+  if (val === null) {
+    return 'null';
+  }
+  if (val === true || val === false || val instanceof Boolean) {
+    return 'boolean';
+  }
+  if (typeof val === 'string' || val instanceof String) {
+    return 'string';
+  }
+  if (typeof val === 'number' || val instanceof Number) {
+    return 'number';
+  }
+
+  // functions
+  if (typeof val === 'function' || val instanceof Function) {
+    return 'function';
+  }
+
+  // array
+  if (typeof Array.isArray !== 'undefined' && Array.isArray(val)) {
+    return 'array';
+  }
+
+  // check for instances of RegExp and Date before calling `toString`
+  if (val instanceof RegExp) {
+    return 'regexp';
+  }
+  if (val instanceof Date) {
+    return 'date';
+  }
+
+  // other objects
+  var type = toString.call(val);
+
+  if (type === '[object RegExp]') {
+    return 'regexp';
+  }
+  if (type === '[object Date]') {
+    return 'date';
+  }
+  if (type === '[object Arguments]') {
+    return 'arguments';
+  }
+  if (type === '[object Error]') {
+    return 'error';
+  }
+
+  // buffer
+  if (isBuffer(val)) {
+    return 'buffer';
+  }
+
+  // es6: Map, WeakMap, Set, WeakSet
+  if (type === '[object Set]') {
+    return 'set';
+  }
+  if (type === '[object WeakSet]') {
+    return 'weakset';
+  }
+  if (type === '[object Map]') {
+    return 'map';
+  }
+  if (type === '[object WeakMap]') {
+    return 'weakmap';
+  }
+  if (type === '[object Symbol]') {
+    return 'symbol';
+  }
+
+  // typed arrays
+  if (type === '[object Int8Array]') {
+    return 'int8array';
+  }
+  if (type === '[object Uint8Array]') {
+    return 'uint8array';
+  }
+  if (type === '[object Uint8ClampedArray]') {
+    return 'uint8clampedarray';
+  }
+  if (type === '[object Int16Array]') {
+    return 'int16array';
+  }
+  if (type === '[object Uint16Array]') {
+    return 'uint16array';
+  }
+  if (type === '[object Int32Array]') {
+    return 'int32array';
+  }
+  if (type === '[object Uint32Array]') {
+    return 'uint32array';
+  }
+  if (type === '[object Float32Array]') {
+    return 'float32array';
+  }
+  if (type === '[object Float64Array]') {
+    return 'float64array';
+  }
+
+  // must be a plain object
+  return 'object';
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/normalize-path/index.js":
 /*!**********************************************!*\
   !*** ./node_modules/normalize-path/index.js ***!
@@ -40715,6 +40628,58 @@ module.exports = function normalizePath(str, stripTrailing) {
     str = removeTrailingSeparator(str);
   }
   return str;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/object.omit/index.js":
+/*!*******************************************!*\
+  !*** ./node_modules/object.omit/index.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * object.omit <https://github.com/jonschlinkert/object.omit>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+
+
+var isObject = __webpack_require__(/*! is-extendable */ "./node_modules/is-extendable/index.js");
+var forOwn = __webpack_require__(/*! for-own */ "./node_modules/for-own/index.js");
+
+module.exports = function omit(obj, keys) {
+  if (!isObject(obj)) return {};
+
+  keys = [].concat.apply([], [].slice.call(arguments, 1));
+  var last = keys[keys.length - 1];
+  var res = {}, fn;
+
+  if (typeof last === 'function') {
+    fn = keys.pop();
+  }
+
+  var isFunction = typeof fn === 'function';
+  if (!keys.length && !isFunction) {
+    return obj;
+  }
+
+  forOwn(obj, function(value, key) {
+    if (keys.indexOf(key) === -1) {
+
+      if (!isFunction) {
+        res[key] = value;
+      } else if (fn(value, key, obj)) {
+        res[key] = value;
+      }
+    }
+  });
+  return res;
 };
 
 
@@ -44776,10 +44741,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TableComponent.vue?vue&type=template&id=8554570c&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TableComponent.vue?vue&type=template&id=8554570c& ***!
+  \*****************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44794,15 +44759,13 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c(
       "div",
-      { attrs: { id: "people" } },
       [
-        _vm._v("\n        sdfsafasfd\n      "),
-        _c("v-client-table", {
+        _c("v-server-table", {
           attrs: {
+            url: "/api/users",
             data: _vm.tableData,
             columns: _vm.columns,
-            options: _vm.options,
-            name: _vm.namest
+            options: _vm.options
           }
         })
       ],
@@ -62642,8 +62605,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 
-Vue.use(vue_tables_2__WEBPACK_IMPORTED_MODULE_0__["ClientTable"], {}, false, 'bootstrap4', 'default');
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+Vue.use(vue_tables_2__WEBPACK_IMPORTED_MODULE_0__["ServerTable"], {}, false, 'bootstrap4', 'default');
+Vue.component('table-component', __webpack_require__(/*! ./components/TableComponent.vue */ "./resources/js/components/TableComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -62714,17 +62677,17 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue ***!
-  \******************************************************/
+/***/ "./resources/js/components/TableComponent.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/TableComponent.vue ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony import */ var _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _TableComponent_vue_vue_type_template_id_8554570c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableComponent.vue?vue&type=template&id=8554570c& */ "./resources/js/components/TableComponent.vue?vue&type=template&id=8554570c&");
+/* harmony import */ var _TableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/TableComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -62734,9 +62697,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _TableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TableComponent_vue_vue_type_template_id_8554570c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TableComponent_vue_vue_type_template_id_8554570c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -62746,38 +62709,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/ExampleComponent.vue"
+component.options.__file = "resources/js/components/TableComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
+/***/ "./resources/js/components/TableComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/TableComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TableComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TableComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/TableComponent.vue?vue&type=template&id=8554570c&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/TableComponent.vue?vue&type=template&id=8554570c& ***!
+  \***********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableComponent_vue_vue_type_template_id_8554570c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TableComponent.vue?vue&type=template&id=8554570c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TableComponent.vue?vue&type=template&id=8554570c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableComponent_vue_vue_type_template_id_8554570c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableComponent_vue_vue_type_template_id_8554570c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

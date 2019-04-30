@@ -19,10 +19,11 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-import {ServerTable, ClientTable, Event} from 'vue-tables-2';
-Vue.use(ClientTable, {}, false, 'bootstrap4','default');
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+import {ServerTable, ClientTable, Event} from 'vue-tables-2';
+Vue.use(ServerTable, {}, false, 'bootstrap4','default');
+
+Vue.component('table-component', require('./components/TableComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,5 +33,4 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
-
 });
