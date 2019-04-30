@@ -1,5 +1,4 @@
 # Sample project using Vuetable-2 server-side with Laravel
-Sample project using Vuetable-2 server side in Laravel
 
 ## Trying this sample project
 - clone the repo to your local machine
