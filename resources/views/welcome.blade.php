@@ -17,7 +17,11 @@
     </head>
     <body>
         <div id="app">
-            <table-component></table-component>
+            <div class="card">
+                <div class="card-body">
+                    <table-component></table-component>
+                </div>
+            </div>
         </div>
         <script src=" {{ mix('js/app.js') }} "></script>
     </body>
