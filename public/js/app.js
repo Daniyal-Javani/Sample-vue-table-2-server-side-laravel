@@ -2342,14 +2342,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      columns: ['name', 'email'],
+      columns: ['id', 'name', 'email', 'edit'],
       tableData: [],
       options: {
-        filterable: ['name', 'email'],
-        sortable: ['name', 'email'],
+        filterable: ['id', 'name', 'email'],
+        sortable: ['id', 'name', 'email'],
         perPage: 25,
         perPageValues: [25],
         pagination: {
@@ -2380,6 +2382,12 @@ __webpack_require__.r(__webpack_exports__);
         templates: {}
       }
     };
+  },
+  methods: {
+    edit: function edit(id) {
+      console.log(id);
+      return null;
+    }
   }
 });
 
@@ -44766,7 +44774,22 @@ var render = function() {
             data: _vm.tableData,
             columns: _vm.columns,
             options: _vm.options
-          }
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "edit",
+              fn: function(props) {
+                return _c("a", {
+                  staticClass: "glyphicon glyphicon-pencil",
+                  on: {
+                    click: function($event) {
+                      return _vm.edit(props.row.id)
+                    }
+                  }
+                })
+              }
+            }
+          ])
         })
       ],
       1

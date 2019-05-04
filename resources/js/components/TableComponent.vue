@@ -1,7 +1,9 @@
 <template>
     <div class="container">
         <div>
-            <v-server-table url="/api/users" :data="tableData" :columns="columns" :options="options" ></v-server-table>
+            <v-server-table url="/api/users" :data="tableData" :columns="columns" :options="options" >
+                <a slot="edit" slot-scope="props" class="glyphicon glyphicon-pencil" @click="edit(props.row.id)"></a>
+            </v-server-table>
         </div>
     </div>
 </template>
@@ -10,11 +12,11 @@
     export default {
         data: function() {
             return {
-                columns: ['name', 'email'],
+                columns: ['id', 'name', 'email', 'edit'],
                 tableData: [],
                 options: {
-                    filterable: ['name', 'email'],
-                    sortable: ['name', 'email'],
+                    filterable: ['id', 'name', 'email'],
+                    sortable: ['id', 'name', 'email'],
                     perPage:25,
                     perPageValues:[25],
                     pagination: {
@@ -50,6 +52,13 @@
                 }
 
             }
+        },
+
+        methods: {
+            edit(id) {
+                console.log(id);
+                return null;
+            },
         }
     }
 </script>

@@ -12,6 +12,6 @@ class UserController extends Controller
     {
     	$u = User::query();
     	$t = new EloquentVueTables();
-    	return $t->get($u, ['name', 'email']);
+    	return $t->get($u, ['id', 'name', 'email']);
     }
 }
