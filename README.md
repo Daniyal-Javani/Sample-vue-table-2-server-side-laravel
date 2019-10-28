@@ -1,5 +1,5 @@
-# Sample project using Vuetable-2 server-side with Laravel
-
+# Sample project using [vue-tables-2](https://github.com/matfish2/vue-tables-2) server-side with Laravel
+=
 ## Trying this sample project
 - clone the repo to your local machine
 - `cd` into the directory
